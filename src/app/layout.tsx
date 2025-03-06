@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
 import { akkuratMonoFont, flabbyBumsFont, neueMontrealFont } from '@/configs';
 
-import './globals.css';
+import Navbar from '@/components/layout/navbar';
+import Contexts from '@/contexts';
+import Providers from '@/providers';
+
+import '@/styles/globals.css';
 
 export const metadata: Metadata = {
   title: 'MintMuse',
@@ -10,7 +14,7 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
   },
-  keywords: 'NFTs, Image AI, onchain, web3',
+  keywords: 'MintMuse, NFTs, Image AI, onchain, web3',
 };
 
 export default function RootLayout({
@@ -23,7 +27,14 @@ export default function RootLayout({
       <body
         className={`antialiased dark ${akkuratMonoFont.className} ${neueMontrealFont.variable} ${flabbyBumsFont.variable}`}
       >
-        {children}
+        <Contexts>
+          <Providers>
+            <div className="w-full h-full">
+              <Navbar />
+              {children}
+            </div>
+          </Providers>
+        </Contexts>
       </body>
     </html>
   );
