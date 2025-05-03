@@ -137,3 +137,18 @@
     padding: 0 10px;
   }
 }
+
+.embla {
+  overflow: hidden;
+  width: 100%;
+}
+
+.embla__container {
+  display: flex;
+  backface-visibility: hidden;
+}
+
+.embla__slide {
+  position: relative;
+  min-width: 0;
+}
