@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
+import { motion } from 'framer-motion';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,33 +29,40 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({ className }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className={`h-8 min-w-[160px] w-[160px] max-md:w-full flex items-center justify-between ${className}`}
-        >
-          <div className="flex items-center truncate mr-1">
-            <ChainIcon
-              chainType={selectedChain}
-              size={20}
-              className="mr-2 flex-shrink-0"
-            />
-            <span className="capitalize truncate">{selectedChain}</span>
-            {SUPPORTED_CHAINS[selectedChain].isTestnet && (
-              <span className="ml-1 text-xs text-muted-foreground flex-shrink-0">
-                (Test)
-              </span>
-            )}
-          </div>
-          <ChevronDown className="h-4 w-4 flex-shrink-0" />
-        </Button>
+        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <Button
+            variant="outline"
+            size="sm"
+            className={`h-8 min-w-[160px] w-[160px] max-md:w-full flex items-center justify-between 
+              bg-black/30 backdrop-blur-sm border-white/20 text-white hover:bg-white/10 hover:border-[#F3CC3E]/50 
+              hover:text-[#F3CC3E] transition-all ${className}`}
+          >
+            <div className="flex items-center truncate mr-1">
+              <ChainIcon
+                chainType={selectedChain}
+                size={20}
+                className="mr-2 flex-shrink-0"
+              />
+              <span className="capitalize truncate">{selectedChain}</span>
+              {SUPPORTED_CHAINS[selectedChain].isTestnet && (
+                <span className="ml-1 text-xs text-white/60 flex-shrink-0">
+                  (Test)
+                </span>
+              )}
+            </div>
+            <ChevronDown className="h-4 w-4 flex-shrink-0" />
+          </Button>
+        </motion.div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-[160px]">
+      <DropdownMenuContent
+        align="end"
+        className="min-w-[160px] bg-black/80 backdrop-blur-md border border-white/20 text-white"
+      >
         {Object.entries(SUPPORTED_CHAINS).map(([key, chain]) => (
           <DropdownMenuItem
             key={key}
             onClick={() => handleSelectChain(key as ChainType)}
-            className="flex items-center cursor-pointer"
+            className="flex items-center cursor-pointer hover:bg-white/10 hover:text-[#F3CC3E] focus:bg-white/10 focus:text-[#F3CC3E]"
           >
             <ChainIcon
               chainType={key as ChainType}
@@ -63,7 +71,7 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({ className }) => {
             />
             <span className="capitalize">{key}</span>
             {chain.isTestnet && (
-              <span className="ml-1 text-xs text-muted-foreground">(Test)</span>
+              <span className="ml-1 text-xs text-white/60">(Test)</span>
             )}
           </DropdownMenuItem>
         ))}
