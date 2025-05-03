@@ -3,127 +3,77 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Cpu, Sparkles, Coins, Zap, Link, Shield } from 'lucide-react';
+import { FEATURES } from '@/data/general';
+import Image from 'next/image';
 
-const features = [
-  {
-    icon: <Cpu className="h-6 w-6" />,
-    title: 'Advanced AI Generation',
-    description:
-      'Our AI models are trained on thousands of NFT collections to create unique artwork with your prompt.',
-    color: 'from-purple-500 to-pink-500',
-  },
-  {
-    icon: <Sparkles className="h-6 w-6" />,
-    title: 'Multiple Styles',
-    description:
-      'Choose from various NFT styles including pixel art, 3D renders, hand-drawn illustrations, and more.',
-    color: 'from-blue-500 to-cyan-500',
-  },
-  {
-    icon: <Coins className="h-6 w-6" />,
-    title: 'Multi-Chain Support',
-    description:
-      'Mint your creation on Ethereum, Solana, or Sui blockchain with just a few clicks.',
-    color: 'from-green-500 to-teal-500',
-  },
-  {
-    icon: <Zap className="h-6 w-6" />,
-    title: 'Instant Generation',
-    description:
-      'Get your NFT artwork in seconds, no waiting or complicated setup required.',
-    color: 'from-orange-500 to-yellow-500',
-  },
-  {
-    icon: <Link className="h-6 w-6" />,
-    title: 'Decentralized Storage',
-    description:
-      'Your NFT metadata and artwork are securely stored on decentralized storage solutions.',
-    color: 'from-red-500 to-pink-500',
-  },
-  {
-    icon: <Shield className="h-6 w-6" />,
-    title: 'Full Ownership',
-    description:
-      'You retain 100% ownership of all generated assets with verifiable on-chain provenance.',
-    color: 'from-indigo-500 to-purple-500',
-  },
-];
+const iconComponents = {
+  Cpu: Cpu,
+  Sparkles: Sparkles,
+  Coins: Coins,
+  Zap: Zap,
+  Link: Link,
+  Shield: Shield,
+};
 
 const FeatureCard: React.FC<{
-  icon: React.ReactNode;
+  icon: string;
   title: string;
   description: string;
   color: string;
   index: number;
 }> = ({ icon, title, description, color, index }) => {
+  const IconComponent = iconComponents[icon as keyof typeof iconComponents];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       viewport={{ once: true, margin: '-100px' }}
-      className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-black/60 transition-all duration-300"
+      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+      className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-black/60 transition-all duration-300 h-full"
     >
       <div className={`bg-gradient-to-r ${color} p-3 rounded-lg w-fit mb-4`}>
-        {icon}
+        <IconComponent className="h-6 w-6" />
       </div>
-      <h3 className="text-xl font-bold mb-2">{title}</h3>
-      <p className="text-gray-400">{description}</p>
+      <h3 className="text-xl font-bold mb-2 text-[#F3CC3E]">{title}</h3>
+      <p className="text-white/90">{description}</p>
     </motion.div>
   );
 };
 
 const FeaturesSection: React.FC = () => {
+  // Animation for staggered reveal of feature cards
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
   return (
-    <div className="relative py-24 bg-black text-white overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <svg
-          className="absolute top-0 left-0 w-full h-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <motion.path
-            d="M0,0 C30,40 70,40 100,0 L100,100 L0,100 Z"
-            fill="url(#gradient1)"
-            initial={{ opacity: 0.1 }}
-            animate={{
-              opacity: [0.05, 0.1, 0.05],
-              y: [0, -5, 0],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
+    <div className="relative py-24 text-white">
+      {/* Negative margin to overlap with HeroSection for seamless transition */}
+      <div className="absolute inset-0 -mt-16 z-0">
+        {/* Background image */}
+        <div className="absolute inset-0 w-full h-full">
+          <Image
+            src="/images/features-section-bg.webp"
+            alt="Van Gogh's Wheatfield with Crows"
+            fill
+            className="object-cover"
           />
-        </svg>
-        <svg
-          className="absolute bottom-0 left-0 w-full h-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#7928CA" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="#FF0080" stopOpacity="0.3" />
-            </linearGradient>
-          </defs>
-          <motion.path
-            d="M0,100 C30,60 70,60 100,100 L100,0 L0,0 Z"
-            fill="url(#gradient1)"
-            initial={{ opacity: 0.1 }}
-            animate={{
-              opacity: [0.05, 0.1, 0.05],
-              y: [0, 5, 0],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-        </svg>
+          <div className="absolute inset-0 bg-black/40" />{' '}
+          {/* Overlay to improve text readability */}
+        </div>
+
+        {/* Gradient transitions */}
+        <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-black to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-black" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -134,17 +84,31 @@ const FeaturesSection: React.FC = () => {
           viewport={{ once: true, margin: '-100px' }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            AI-Powered NFT Creation
-          </h2>
-          <p className="text-xl text-gray-400">
-            Transform your ideas into unique digital collectibles with
-            cutting-edge AI technology.
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="inline-block bg-black/30 backdrop-blur-sm px-6 py-2 rounded-full mb-4 border border-white/10"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold">
+              Van Gogh Style AI Creation
+            </h2>
+          </motion.div>
+          <p className="text-xl text-white/90 bg-black/30 backdrop-blur-sm p-4 rounded-lg">
+            Transform your ideas into unique digital collectibles with AI
+            fine-tuned on Vincent van Gogh's masterpieces.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-100px' }}
+        >
+          {FEATURES.map((feature, index) => (
             <FeatureCard
               key={index}
               icon={feature.icon}
@@ -154,7 +118,7 @@ const FeaturesSection: React.FC = () => {
               index={index}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
