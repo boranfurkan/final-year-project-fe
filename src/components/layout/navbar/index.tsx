@@ -23,8 +23,8 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur">
-      <div className="container flex h-16 items-center justify-between">
+    <header className="fixed top-0 z-40 w-full border-b border-white/10 bg-transparent backdrop-blur">
+      <div className="container flex h-16 items-center justify-between bg-transparent">
         {/* Logo Component */}
         <div className="flex-1 w-full">
           <Logo />
