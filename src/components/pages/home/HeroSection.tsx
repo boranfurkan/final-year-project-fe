@@ -1,162 +1,197 @@
+// @/components/pages/home/HeroSection.tsx
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Palette } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { SAMPLE_PROMPTS, COLORS } from '@/data/general';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const HeroSection: React.FC = () => {
-  const [prompt, setPrompt] = useState(
-    'enchanted forest with magical creatures'
-  );
-  const promptExamples = [
-    'enchanted forest with magical creatures',
-    'futuristic city with flying cars',
-    'cosmic jellyfish in deep space',
-    'cyberpunk samurai with neon sword',
-    'underwater temple with ancient guardians',
+  const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Mock images that would be pre-loaded (we'd replace these with actual Van Gogh style images)
+  const mockImages = [
+    '/generated/image1.jpg',
+    '/generated/image2.jpg',
+    '/generated/image3.jpg',
+    '/generated/image4.jpg',
   ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const randomIndex = Math.floor(Math.random() * promptExamples.length);
-      setPrompt(promptExamples[randomIndex]);
-    }, 3000);
+    const intervalId = setInterval(() => {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setCurrentPromptIndex((prev) => (prev + 1) % SAMPLE_PROMPTS.length);
+        setCurrentImageIndex((prev) => (prev + 1) % mockImages.length);
+        setIsTransitioning(false);
+      }, 500);
+    }, 5000);
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(intervalId);
+  }, [mockImages.length]);
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-black text-white">
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20 z-0" />
-
-      {/* Animated particles */}
+    <div className="relative h-full text-white py-20 md:py-10">
+      {/* Background image */}
       <div className="absolute inset-0 z-0">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-white rounded-full"
-            initial={{
-              x: Math.random() * 100 + '%',
-              y: Math.random() * 100 + '%',
-              opacity: Math.random() * 0.5 + 0.3,
-            }}
-            animate={{
-              y: [Math.random() * 100 + '%', Math.random() * 100 + '%'],
-              opacity: [0.2, 0.8, 0.2],
-              scale: [1, Math.random() * 1.5 + 1, 1],
-            }}
-            transition={{
-              repeat: Infinity,
-              duration: Math.random() * 20 + 10,
-              ease: 'linear',
-            }}
-          />
-        ))}
+        <Image
+          src="/images/hero-section-bg.jpg"
+          alt="Van Gogh Starry Night"
+          fill
+          priority
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-4xl mx-auto"
-        >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="flex justify-center mb-6"
-          >
-            <div className="bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-full">
-              <Sparkles className="h-8 w-8 text-white" />
-            </div>
-          </motion.div>
+      <div className="relative z-10 flex flex-col min-h-screen h-full">
+        {/* Gradient transitions */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-black" />
 
-          <motion.h1
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500"
-          >
-            Turn Imagination Into NFTs
-          </motion.h1>
-
-          <motion.p
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="text-xl md:text-2xl text-gray-300 mb-8"
-          >
-            Create unique NFT artwork with AI and mint on Ethereum, Solana, or
-            Sui blockchain in seconds.
-          </motion.p>
-
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            className="flex flex-col sm:flex-row justify-center gap-4 mb-12"
-          >
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
+        <div className="container mx-auto px-4 py-12 flex-grow flex flex-col lg:flex-row">
+          {/* Left Content Side */}
+          <div className="w-full lg:w-1/2 flex flex-col justify-center p-4 lg:p-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="mb-2"
             >
-              Start Creating
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white/20 text-white hover:bg-white/10"
-            >
-              How It Works
-            </Button>
-          </motion.div>
+              <span className="inline-block px-4 py-1 bg-black/40 backdrop-blur-sm rounded-full text-sm font-medium mb-4">
+                AI-Powered Art Generation
+              </span>
+            </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 1, duration: 0.8 }}
-            className="relative mx-auto rounded-xl overflow-hidden shadow-2xl border border-white/10 w-full max-w-2xl aspect-video"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-transparent to-blue-900/30" />
-            <div className="absolute inset-x-0 top-0 bg-black/80 p-3 text-left border-b border-white/10">
-              <motion.p
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 3, repeat: Infinity }}
-                className="text-green-400 font-mono"
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+            >
+              Create NFTs in
+              <span className="block text-[#F3CC3E]">Vincent van Gogh's</span>
+              iconic style
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-lg text-white/90 mb-8 max-w-lg backdrop-blur-sm bg-black/30 p-3 rounded-lg"
+            >
+              Our AI transforms your ideas into stunning artwork with Van Gogh's
+              distinctive brushwork and color palette. Mint directly on
+              Ethereum, Solana, or Sui blockchain.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4 mb-8"
+            >
+              <Link href="/create">
+                <Button
+                  size="lg"
+                  className={`bg-gradient-to-r ${COLORS.gradient.blueYellow} hover:opacity-90 text-white w-full sm:w-auto`}
+                >
+                  Start Creating <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-white/40 bg-black/30 backdrop-blur-sm hover:bg-white/10 w-full sm:w-auto"
               >
-                &gt; Generating NFT with prompt: &quot;
-                <span className="text-blue-400">{prompt}</span>&quot;
-              </motion.p>
-            </div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <motion.div
-                animate={{
-                  rotate: 360,
-                  opacity: [0.8, 0.2, 0.8],
-                }}
-                transition={{
-                  rotate: { duration: 8, repeat: Infinity, ease: 'linear' },
-                  opacity: { duration: 3, repeat: Infinity },
-                }}
-                className="w-20 h-20 border-4 border-t-purple-500 border-r-transparent border-b-blue-500 border-l-transparent rounded-full"
-              />
-            </div>
-            <div className="absolute inset-x-0 bottom-0 p-3 flex justify-between items-center bg-black/80 border-t border-white/10">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-xs text-white/70">
-                  Generating preview...
-                </span>
-              </div>
-              <span className="text-xs text-white/70">67%</span>
-            </div>
-          </motion.div>
-        </motion.div>
-      </div>
+                View Gallery <Palette className="ml-2 h-4 w-4" />
+              </Button>
+            </motion.div>
 
-      <div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-black to-transparent z-10" />
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="border-l-2 border-[#F3CC3E] pl-4 bg-black/30 backdrop-blur-sm p-3 rounded-r-lg"
+            >
+              <p className="text-sm text-white/80 mb-2">
+                Try with these prompts:
+              </p>
+              <AnimatePresence mode="wait">
+                {!isTransitioning && (
+                  <motion.p
+                    key={currentPromptIndex}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
+                    transition={{ duration: 0.5 }}
+                    className="font-medium text-white"
+                  >
+                    "{SAMPLE_PROMPTS[currentPromptIndex]}"
+                  </motion.p>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          </div>
+
+          {/* Right Image Side - Now clearly visible on mobile */}
+          <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-12 mt-8 lg:mt-0">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              className="relative max-w-md w-full aspect-square"
+            >
+              {/* Decorative frame */}
+              <div className="absolute -inset-3 border-4 border-[#F3CC3E]/50 rounded-lg z-0" />
+
+              {/* Image display */}
+              <AnimatePresence mode="wait">
+                {!isTransitioning && (
+                  <motion.div
+                    key={currentImageIndex}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.05 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-full h-full relative rounded-lg overflow-hidden shadow-2xl"
+                  >
+                    {/* Image placeholder */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#2C75FF] to-[#F3CC3E] flex items-center justify-center">
+                      <span className="font-bold text-white text-2xl">
+                        Generated Image {currentImageIndex + 1}
+                      </span>
+                    </div>
+
+                    {/* Overlay with prompt */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-4 text-sm">
+                      <p className="text-white/90 italic line-clamp-2">
+                        "{SAMPLE_PROMPTS[currentPromptIndex]}"
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Progress dots */}
+              <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2">
+                {mockImages.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`w-2 h-2 rounded-full ${
+                      idx === currentImageIndex ? 'bg-[#F3CC3E]' : 'bg-white/30'
+                    }`}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
