@@ -70,7 +70,7 @@ const ShowcaseSection: React.FC = () => {
       {/* Background image */}
       <div className="absolute inset-0 -mt-16 z-0">
         <Image
-          src="/images/showcase-section-bg.png"
+          src="/images/section-bg/showcase-section-bg.png"
           alt="Van Gogh's Red Vineyard"
           fill
           className="object-cover"

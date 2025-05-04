@@ -61,7 +61,7 @@ const FeaturesSection: React.FC = () => {
         {/* Background image */}
         <div className="absolute inset-0 w-full h-full">
           <Image
-            src="/images/features-section-bg.webp"
+            src="/images/section-bg/features-section-bg.webp"
             alt="Van Gogh's Wheatfield with Crows"
             fill
             className="object-cover"

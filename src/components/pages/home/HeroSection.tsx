@@ -38,7 +38,7 @@ const HeroSection: React.FC = () => {
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/hero-section-bg.jpg"
+          src="/images/section-bg/hero-section-bg.jpg"
           alt="Van Gogh Starry Night"
           fill
           priority

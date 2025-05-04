@@ -65,7 +65,7 @@ const HowItWorksSection: React.FC = () => {
     <div ref={containerRef} className="relative bg-black overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/how-it-works-section-bg.jpeg"
+          src="/images/section-bg/how-it-works-section-bg.jpeg"
           alt="Van Gogh Inspired Landscape"
           fill
           priority
