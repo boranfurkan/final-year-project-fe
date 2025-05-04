@@ -59,8 +59,6 @@ const ShowcaseSection: React.FC = () => {
     },
     hover: {
       y: -10,
-      boxShadow:
-        '0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1)',
       transition: { duration: 0.3 },
     },
   };
@@ -128,33 +126,14 @@ const ShowcaseSection: React.FC = () => {
                 >
                   <div className="bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 shadow-xl h-full transform transition-transform duration-300">
                     <div className="aspect-square relative overflow-hidden">
-                      {/* Decorative frame */}
-                      <div className="absolute inset-2 border border-yellow-500/20 rounded-lg z-10 pointer-events-none" />
-
-                      {/* Gradient overlay to match painting colors */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-transparent to-yellow-500/10 z-10" />
-
                       {/* This would be replaced with actual NFT images */}
-                      <div className="w-full h-full bg-gradient-to-br from-red-600 via-yellow-600 to-red-700 flex items-center justify-center relative">
-                        <span className="font-bold text-white text-xl z-20 bg-black/40 px-4 py-2 rounded">
-                          {nft.title}
-                        </span>
-
-                        {/* Add Van Gogh-style brushstrokes as decoration */}
-                        {Array.from({ length: 15 }).map((_, i) => (
-                          <div
-                            key={i}
-                            className="absolute bg-white/10"
-                            style={{
-                              height: `${Math.random() * 3 + 1}px`,
-                              width: `${Math.random() * 30 + 20}px`,
-                              top: `${Math.random() * 100}%`,
-                              left: `${Math.random() * 100}%`,
-                              transform: `rotate(${Math.random() * 180}deg)`,
-                            }}
-                          />
-                        ))}
-                      </div>
+                      <Image
+                        src={nft.image}
+                        alt={nft.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
 
                       <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm px-2 py-1 rounded-md text-xs flex items-center gap-1 z-20 border border-white/10">
                         <div className="w-3 h-3 relative">

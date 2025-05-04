@@ -7,14 +7,46 @@ export const SITE_DESCRIPTION =
 
 // Prompts for HeroSection
 export const SAMPLE_PROMPTS = [
-  'A serene countryside landscape with rolling wheat fields under a vibrant sunset sky with swirling clouds',
-  'A quiet café terrace at night illuminated by warm yellow lights, with a starry sky above',
-  'Twisted cypress trees against a turbulent sky with crescent moon and swirling stars',
-  'A vase filled with vibrant sunflowers positioned by a window with morning light streaming in',
-  'A peaceful riverside village with boats docked along the shore and hills in the distance',
-  'A lively outdoor market in a small French town with colorful stalls and bustling crowds',
-  'A wooden chair by a window overlooking a garden with blooming irises and roses',
-  'A winding path through an olive grove with mountains visible on the horizon',
+  {
+    prompt:
+      'A serene countryside landscape with rolling wheat fields under a vibrant sunset sky with swirling clouds',
+    image: '/images/ai-generated-images/serene-countryside.png',
+  },
+  {
+    prompt:
+      'A quiet café terrace at night illuminated by warm yellow lights, with a starry sky above',
+    image: '/images/ai-generated-images/quiet-cafe-terrace.png',
+  },
+  {
+    prompt:
+      'Twisted cypress trees against a turbulent sky with crescent moon and swirling stars',
+    image: '/images/ai-generated-images/twisted-cypress-trees.png',
+  },
+  {
+    prompt:
+      'A vase filled with vibrant sunflowers positioned by a window with morning light streaming in',
+    image: '/images/ai-generated-images/vase-filled.png',
+  },
+  {
+    prompt:
+      'A peaceful riverside village with boats docked along the shore and hills in the distance',
+    image: '/images/ai-generated-images/peaceful-riverside.png',
+  },
+  {
+    prompt:
+      'A lively outdoor market in a small French town with colorful stalls and bustling crowds',
+    image: '/images/ai-generated-images/lively-outdoor-market.png',
+  },
+  {
+    prompt:
+      'A wooden chair by a window overlooking a garden with blooming irises and roses',
+    image: '/images/ai-generated-images/wooden-chair.png',
+  },
+  {
+    prompt:
+      'A winding path through an olive grove with mountains visible on the horizon',
+    image: '/images/ai-generated-images/olive-grove.png',
+  },
 ];
 
 // Featured creations for ShowcaseSection
@@ -27,7 +59,7 @@ export const FEATURED_CREATIONS: FEATURED_CREATIONS_TYPE = [
     chain: 'ethereum',
     chainTicker: 'ETH',
     creator: '0x742...8def',
-    image: '/showcase/nft1.jpg',
+    image: '/images/ai-generated-images/night-landscape.png',
   },
   {
     id: 2,
@@ -37,7 +69,7 @@ export const FEATURED_CREATIONS: FEATURED_CREATIONS_TYPE = [
     chain: 'solana',
     chainTicker: 'SOL',
     creator: 'SNK9...j2PV',
-    image: '/showcase/nft2.jpg',
+    image: '/images/ai-generated-images/blossoming-trees.png',
   },
   {
     id: 3,
@@ -47,7 +79,7 @@ export const FEATURED_CREATIONS: FEATURED_CREATIONS_TYPE = [
     chain: 'sui',
     chainTicker: 'SUI',
     creator: '0x881...5ce1',
-    image: '/showcase/nft3.jpg',
+    image: '/images/ai-generated-images/cypress-trees.png',
   },
   {
     id: 4,
@@ -57,7 +89,7 @@ export const FEATURED_CREATIONS: FEATURED_CREATIONS_TYPE = [
     chain: 'ethereum',
     chainTicker: 'ETH',
     creator: '0x938...4f21',
-    image: '/showcase/nft4.jpg',
+    image: '/images/ai-generated-images/cozy-outdoor-cafe.png',
   },
   {
     id: 5,
@@ -67,7 +99,7 @@ export const FEATURED_CREATIONS: FEATURED_CREATIONS_TYPE = [
     chain: 'solana',
     chainTicker: 'SOL',
     creator: 'AK72...9fZ1',
-    image: '/showcase/nft5.jpg',
+    image: '/images/ai-generated-images/fields-of-wildflowers.png',
   },
   {
     id: 6,
@@ -77,7 +109,7 @@ export const FEATURED_CREATIONS: FEATURED_CREATIONS_TYPE = [
     chain: 'sui',
     chainTicker: 'SUI',
     creator: '0x422...9a7b',
-    image: '/showcase/nft6.jpg',
+    image: '/images/ai-generated-images/old-stone-bridge.png',
   },
 ];
 

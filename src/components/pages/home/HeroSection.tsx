@@ -11,27 +11,18 @@ import Image from 'next/image';
 const HeroSection: React.FC = () => {
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const mockImages = [
-    '/generated/image1.jpg',
-    '/generated/image2.jpg',
-    '/generated/image3.jpg',
-    '/generated/image4.jpg',
-  ];
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       setIsTransitioning(true);
       setTimeout(() => {
         setCurrentPromptIndex((prev) => (prev + 1) % SAMPLE_PROMPTS.length);
-        setCurrentImageIndex((prev) => (prev + 1) % mockImages.length);
         setIsTransitioning(false);
       }, 500);
     }, 5000);
 
     return () => clearInterval(intervalId);
-  }, [mockImages.length]);
+  }, []);
 
   return (
     <div className="relative h-full text-white py-20 md:py-10">
@@ -129,7 +120,7 @@ const HeroSection: React.FC = () => {
                     transition={{ duration: 0.5 }}
                     className="font-medium text-white"
                   >
-                    "{SAMPLE_PROMPTS[currentPromptIndex]}"
+                    "{SAMPLE_PROMPTS[currentPromptIndex].prompt}"
                   </motion.p>
                 )}
               </AnimatePresence>
@@ -151,24 +142,27 @@ const HeroSection: React.FC = () => {
               <AnimatePresence mode="wait">
                 {!isTransitioning && (
                   <motion.div
-                    key={currentImageIndex}
+                    key={currentPromptIndex}
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 1.05 }}
                     transition={{ duration: 0.5 }}
                     className="w-full h-full relative rounded-lg overflow-hidden shadow-2xl"
                   >
-                    {/* Image placeholder */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#2C75FF] to-[#F3CC3E] flex items-center justify-center">
-                      <span className="font-bold text-white text-2xl">
-                        Generated Image {currentImageIndex + 1}
-                      </span>
-                    </div>
+                    {/* Image from SAMPLE_PROMPTS */}
+                    <Image
+                      src={SAMPLE_PROMPTS[currentPromptIndex].image}
+                      alt={`AI generated art: ${SAMPLE_PROMPTS[
+                        currentPromptIndex
+                      ].prompt.substring(0, 50)}...`}
+                      fill
+                      className="object-cover"
+                    />
 
                     {/* Overlay with prompt */}
                     <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-4 text-sm">
                       <p className="text-white/90 italic line-clamp-2">
-                        "{SAMPLE_PROMPTS[currentPromptIndex]}"
+                        "{SAMPLE_PROMPTS[currentPromptIndex].prompt}"
                       </p>
                     </div>
                   </motion.div>
@@ -177,11 +171,13 @@ const HeroSection: React.FC = () => {
 
               {/* Progress dots */}
               <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2">
-                {mockImages.map((_, idx) => (
+                {SAMPLE_PROMPTS.map((_, idx) => (
                   <div
                     key={idx}
                     className={`w-2 h-2 rounded-full ${
-                      idx === currentImageIndex ? 'bg-[#F3CC3E]' : 'bg-white/30'
+                      idx === currentPromptIndex
+                        ? 'bg-[#F3CC3E]'
+                        : 'bg-white/30'
                     }`}
                   />
                 ))}
