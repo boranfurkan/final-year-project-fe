@@ -25,8 +25,7 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       deleteCookie('jwt');
-
-      /*       window.location.href = '/'; */
+      window.location.href = '/';
     }
     return Promise.reject(error);
   }
