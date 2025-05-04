@@ -14,7 +14,6 @@ const HeroSection: React.FC = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Mock images that would be pre-loaded (we'd replace these with actual Van Gogh style images)
   const mockImages = [
     '/generated/image1.jpg',
     '/generated/image2.jpg',

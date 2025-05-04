@@ -43,7 +43,6 @@ const FeatureCard: React.FC<{
 };
 
 const FeaturesSection: React.FC = () => {
-  // Animation for staggered reveal of feature cards
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -67,7 +66,7 @@ const FeaturesSection: React.FC = () => {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black/40" />{' '}
+          <div className="absolute inset-0 bg-black/40" />
           {/* Overlay to improve text readability */}
         </div>
 

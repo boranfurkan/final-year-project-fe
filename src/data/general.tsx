@@ -1,3 +1,5 @@
+import { MessageSquare, ImageIcon, Wallet, CheckCircle2 } from 'lucide-react';
+
 export const SITE_NAME = 'MintMuse';
 export const SITE_DESCRIPTION =
   'Transform imagination into unique NFTs with AI-powered Van Gogh style art generation';
@@ -145,31 +147,39 @@ export const FEATURES = [
 
 export const HOW_IT_WORKS_STEPS = [
   {
-    icon: 'MessageSquare',
+    id: 1,
     title: 'Create Your Prompt',
     description:
       'Describe your vision in detail. The more specific your prompt, the better the Van Gogh-style result.',
-    color: 'from-[#2C75FF] to-[#4FACAA]',
+    icon: <MessageSquare className="w-full h-full" />,
+    color: '#F3CC3E',
+    accentColor: '#fcd34d',
   },
   {
-    icon: 'Image',
+    id: 2,
     title: 'AI Generates Artwork',
     description:
       'Our fine-tuned AI system transforms your prompt into unique Van Gogh-style artwork in seconds with neural style transfer.',
-    color: 'from-[#4FACAA] to-[#3D6F43]',
+    icon: <ImageIcon className="w-full h-full" />,
+    color: '#3b82f6',
+    accentColor: '#93c5fd',
   },
   {
-    icon: 'Wallet',
+    id: 3,
     title: 'Choose Blockchain & Mint',
     description:
       'Select Ethereum, Solana, or Sui blockchain and mint your artwork as an NFT with one click.',
-    color: 'from-[#3D6F43] to-[#F3CC3E]',
+    icon: <Wallet className="w-full h-full" />,
+    color: '#65a30d',
+    accentColor: '#86efac',
   },
   {
-    icon: 'Check',
+    id: 4,
     title: 'Own Your Creation',
     description:
-      'Your NFT is now on the blockchain with IPFS-stored content. View, share, or sell it on your favorite marketplace.',
-    color: 'from-[#F3CC3E] to-[#854F2B]',
+      'Your NFT is now on the blockchain with IPFS-stored metadata, ready to be showcased or sold in marketplaces.',
+    icon: <CheckCircle2 className="w-full h-full" />,
+    color: '#b45309',
+    accentColor: '#fbbf24',
   },
 ];
