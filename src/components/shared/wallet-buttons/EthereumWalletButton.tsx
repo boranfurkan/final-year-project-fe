@@ -1,8 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { WalletButtonBase } from './WalletButtonBase';
+import { useMultiChainAuth } from '@/hooks/useMultiChainAuth';
+import { useAuth } from '@/providers/AuthProvider';
 
 interface EthereumWalletButtonProps {
   className?: string;
@@ -11,6 +13,9 @@ interface EthereumWalletButtonProps {
 export const EthereumWalletButton: React.FC<EthereumWalletButtonProps> = ({
   className,
 }) => {
+  const { isAuthed } = useAuth();
+  const { isSigningMessage, handleSignIn } = useMultiChainAuth('ethereum');
+
   return (
     <ConnectButton.Custom>
       {({
@@ -29,6 +34,12 @@ export const EthereumWalletButton: React.FC<EthereumWalletButtonProps> = ({
           chain &&
           (!authenticationStatus || authenticationStatus === 'authenticated');
 
+        useEffect(() => {
+          if (connected && !isAuthed && !isSigningMessage) {
+            handleSignIn();
+          }
+        }, [connected, isAuthed, isSigningMessage]);
+
         return (
           <div
             {...(!ready && {
@@ -46,8 +57,9 @@ export const EthereumWalletButton: React.FC<EthereumWalletButtonProps> = ({
                 return (
                   <WalletButtonBase
                     onClick={openConnectModal}
-                    text="Connect Wallet"
+                    text={isSigningMessage ? 'Connecting...' : 'Connect Wallet'}
                     className={className}
+                    disabled={isSigningMessage}
                   />
                 );
               }

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { WalletButtonBase } from './WalletButtonBase';
@@ -11,6 +11,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { shortenWalletAddress } from '@/lib/utils';
+import { useMultiChainAuth } from '@/hooks/useMultiChainAuth';
+import { useAuth } from '@/providers/AuthProvider';
 
 interface SolanaWalletButtonProps {
   className?: string;
@@ -21,6 +23,8 @@ export const SolanaWalletButton: React.FC<SolanaWalletButtonProps> = ({
 }) => {
   const { publicKey, disconnect } = useWallet();
   const { setVisible } = useWalletModal();
+  const { isAuthed } = useAuth();
+  const { isSigningMessage, handleSignIn } = useMultiChainAuth('solana');
 
   const connected = !!publicKey;
 
@@ -33,12 +37,19 @@ export const SolanaWalletButton: React.FC<SolanaWalletButtonProps> = ({
     return shortenWalletAddress(publicKey.toString());
   }, [publicKey]);
 
+  useEffect(() => {
+    if (connected && !isAuthed && !isSigningMessage) {
+      handleSignIn();
+    }
+  }, [connected, isAuthed, isSigningMessage]);
+
   if (!connected) {
     return (
       <WalletButtonBase
         onClick={handleConnect}
-        text="Connect Wallet"
+        text={isSigningMessage ? 'Connecting...' : 'Connect Wallet'}
         className={className}
+        disabled={isSigningMessage}
       />
     );
   }

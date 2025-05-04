@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useWallet } from '@suiet/wallet-kit';
 import { WalletButtonBase } from './WalletButtonBase';
 import {
@@ -17,6 +17,8 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { shortenWalletAddress } from '@/lib/utils';
+import { useMultiChainAuth } from '@/hooks/useMultiChainAuth';
+import { useAuth } from '@/providers/AuthProvider';
 
 interface SuiWalletButtonProps {
   className?: string;
@@ -34,6 +36,8 @@ export const SuiWalletButton: React.FC<SuiWalletButtonProps> = ({
     detectedWallets,
   } = useWallet();
 
+  const { isAuthed } = useAuth();
+  const { isSigningMessage, handleSignIn } = useMultiChainAuth('sui');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const availableWallets = [...configuredWallets, ...detectedWallets];
@@ -51,17 +55,20 @@ export const SuiWalletButton: React.FC<SuiWalletButtonProps> = ({
     setIsDialogOpen(false);
   };
 
-  const handleDisconnect = () => {
-    disconnect();
-  };
+  useEffect(() => {
+    if (connected && !isAuthed && !isSigningMessage) {
+      handleSignIn();
+    }
+  }, [connected, isAuthed, isSigningMessage]);
 
   if (!connected) {
     return (
       <>
         <WalletButtonBase
           onClick={handleConnect}
-          text="Connect Wallet"
+          text={isSigningMessage ? 'Connecting...' : 'Connect Wallet'}
           className={className}
+          disabled={isSigningMessage}
         />
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -123,9 +130,7 @@ export const SuiWalletButton: React.FC<SuiWalletButtonProps> = ({
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={handleDisconnect}>
-          Disconnect
-        </DropdownMenuItem>
+        <DropdownMenuItem onClick={disconnect}>Disconnect</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
