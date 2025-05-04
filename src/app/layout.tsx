@@ -6,11 +6,11 @@ import Contexts from '@/contexts';
 import Providers from '@/providers';
 
 import '@/styles/globals.css';
+import { SITE_DESCRIPTION, SITE_NAME } from '@/data/general';
 
 export const metadata: Metadata = {
-  title: 'MintMuse',
-  description:
-    'MintMuse is an innovative platform that bridges the gap between AI-generated art and blockchain technology. MintMuse empowers users to transform their creative ideas into unique digital assets with just a few clicks.',
+  title: SITE_NAME,
+  description: SITE_DESCRIPTION,
   icons: {
     icon: '/favicon.ico',
   },

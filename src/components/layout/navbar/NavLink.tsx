@@ -1,11 +1,9 @@
-// @/components/layout/navbar/NavLink.tsx
 'use client';
 
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { COLORS } from '@/data/general';
 
 interface NavLinkProps {
   href: string;

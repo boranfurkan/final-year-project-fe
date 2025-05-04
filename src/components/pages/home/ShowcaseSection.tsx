@@ -3,10 +3,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
-import { FEATURED_CREATIONS, COLORS, CHAIN_ICONS } from '@/data/general';
+import { FEATURED_CREATIONS } from '@/data/general';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import useEmblaCarousel from 'embla-carousel-react';
+import { getChainIcon } from '@/lib/getChainIcon';
 
 const ShowcaseSection: React.FC = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -157,14 +158,9 @@ const ShowcaseSection: React.FC = () => {
 
                       <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm px-2 py-1 rounded-md text-xs flex items-center gap-1 z-20 border border-white/10">
                         <div className="w-3 h-3 relative">
-                          <Image
-                            src={
-                              CHAIN_ICONS[nft.chain as keyof typeof CHAIN_ICONS]
-                            }
-                            alt={nft.chain}
-                            width={12}
-                            height={12}
-                          />
+                          {getChainIcon(nft.chainTicker, {
+                            size: 12,
+                          })}
                         </div>
                         <span>{nft.chain}</span>
                       </div>

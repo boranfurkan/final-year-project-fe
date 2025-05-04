@@ -1,11 +1,10 @@
-// @/components/pages/home/HeroSection.tsx
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Palette } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { SAMPLE_PROMPTS, COLORS } from '@/data/general';
+import { SAMPLE_PROMPTS } from '@/data/general';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -97,7 +96,7 @@ const HeroSection: React.FC = () => {
               <Link href="/create">
                 <Button
                   size="lg"
-                  className={`bg-gradient-to-r ${COLORS.gradient.blueYellow} hover:opacity-90 text-white w-full sm:w-auto`}
+                  className={`bg-gradient-to-r from-[#2C75FF] to-[#F3CC3E] hover:opacity-90 text-white w-full sm:w-auto`}
                 >
                   Start Creating <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>

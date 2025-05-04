@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import NavLink from './NavLink';
 import ProfileMenu from './ProfileMenu';
 import UnifiedWalletButton from '@/components/shared/wallet-buttons/UnifiedWalletButton';
-import { COLORS } from '@/data/general';
 
 interface DesktopNavigationProps {
   activePath: string;
