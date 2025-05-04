@@ -7,7 +7,8 @@ import { FEATURED_CREATIONS } from '@/data/general';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import useEmblaCarousel from 'embla-carousel-react';
-import { getChainIcon } from '@/lib/getChainIcon';
+import ChainIcon from '@/components/shared/ChainIcon';
+import { ChainType } from '@/types/chain';
 
 const ShowcaseSection: React.FC = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -137,9 +138,10 @@ const ShowcaseSection: React.FC = () => {
 
                       <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm px-2 py-1 rounded-md text-xs flex items-center gap-1 z-20 border border-white/10">
                         <div className="w-3 h-3 relative">
-                          {getChainIcon(nft.chainTicker, {
-                            size: 12,
-                          })}
+                          <ChainIcon
+                            chainType={nft.chain as ChainType}
+                            size={12}
+                          />
                         </div>
                         <span>{nft.chain}</span>
                       </div>
