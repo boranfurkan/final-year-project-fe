@@ -18,7 +18,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { shortenWalletAddress } from '@/lib/utils';
 import { useMultiChainAuth } from '@/hooks/useMultiChainAuth';
-import { useAuth } from '@/providers/AuthProvider';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface SuiWalletButtonProps {
   className?: string;
@@ -37,7 +37,12 @@ export const SuiWalletButton: React.FC<SuiWalletButtonProps> = ({
   } = useWallet();
 
   const { isAuthed } = useAuth();
-  const { isSigningMessage, handleSignIn } = useMultiChainAuth('sui');
+  const {
+    isSigningMessage,
+    userDeclinedSigning,
+    handleSignIn,
+    resetDeclinedState,
+  } = useMultiChainAuth('sui');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const availableWallets = [...configuredWallets, ...detectedWallets];
@@ -47,6 +52,7 @@ export const SuiWalletButton: React.FC<SuiWalletButtonProps> = ({
     : '';
 
   const handleConnect = () => {
+    resetDeclinedState(); // Reset declined state when user manually connects
     setIsDialogOpen(true);
   };
 
@@ -55,11 +61,27 @@ export const SuiWalletButton: React.FC<SuiWalletButtonProps> = ({
     setIsDialogOpen(false);
   };
 
+  const handleDisconnect = () => {
+    resetDeclinedState(); // Reset declined state when disconnecting
+    disconnect();
+  };
+
   useEffect(() => {
-    if (connected && !isAuthed && !isSigningMessage) {
+    // Only attempt sign-in if:
+    // 1. Connected
+    // 2. Not already authenticated
+    // 3. Not currently in signing process
+    // 4. User hasn't explicitly declined signing
+    if (connected && !isAuthed && !isSigningMessage && !userDeclinedSigning) {
       handleSignIn();
     }
-  }, [connected, isAuthed, isSigningMessage]);
+  }, [
+    connected,
+    isAuthed,
+    isSigningMessage,
+    userDeclinedSigning,
+    handleSignIn,
+  ]);
 
   if (!connected) {
     return (
@@ -130,7 +152,9 @@ export const SuiWalletButton: React.FC<SuiWalletButtonProps> = ({
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={disconnect}>Disconnect</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleDisconnect}>
+          Disconnect
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

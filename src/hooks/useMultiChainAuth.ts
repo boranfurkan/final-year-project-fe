@@ -3,13 +3,13 @@ import {
   useAuthControllerVerifySignature,
   VerifySignatureRequestDtoChain,
 } from '@/api';
-import { useAuth } from '@/providers/AuthProvider';
+import { useAuth } from '@/contexts/AuthContext';
 import { ChainType } from '@/types/chain';
 import { toast } from 'sonner';
 import bs58 from 'bs58';
 import { useWallet as useSolanaWallet } from '@solana/wallet-adapter-react';
 import { useWallet as useSuiWallet } from '@suiet/wallet-kit';
-import { useSignMessage } from 'wagmi';
+import { useSignMessage, useAccount } from 'wagmi';
 import { useCreateNonce } from './useCreateNonce';
 
 // Map UI chain type to API chain enum
@@ -30,6 +30,7 @@ const mapChainToApiEnum = (
 
 export const useMultiChainAuth = (chain: ChainType) => {
   const [isSigningMessage, setIsSigningMessage] = useState(false);
+  const [userDeclinedSigning, setUserDeclinedSigning] = useState(false);
   const verifySignature = useAuthControllerVerifySignature();
 
   const { login: authLogin } = useAuth();
@@ -38,8 +39,12 @@ export const useMultiChainAuth = (chain: ChainType) => {
   const solanaWallet = useSolanaWallet();
   const suiWallet = useSuiWallet();
   const { signMessageAsync: signEthereumMessage } = useSignMessage();
+  const ethereumAccount = useAccount();
 
   const handleSignIn = async () => {
+    // Don't try to sign again if user already declined
+    if (userDeclinedSigning) return;
+
     setIsSigningMessage(true);
     try {
       const nonce = generateNonce();
@@ -50,10 +55,10 @@ export const useMultiChainAuth = (chain: ChainType) => {
       // Chain-specific signing logic
       switch (chain) {
         case 'ethereum': {
-          if (!suiWallet.account?.address) {
+          if (!ethereumAccount.address) {
             throw new Error('Ethereum wallet not connected');
           }
-          walletAddress = suiWallet.account.address;
+          walletAddress = ethereumAccount.address;
           signature = await signEthereumMessage({ message: nonce });
           break;
         }
@@ -100,11 +105,12 @@ export const useMultiChainAuth = (chain: ChainType) => {
         },
       });
 
-      console.log(authToken);
-
       // Update auth state
       authLogin(authToken);
       toast.success('Connected successfully');
+
+      // Reset declined state since we succeeded
+      setUserDeclinedSigning(false);
     } catch (error: any) {
       console.error('Authentication error:', error);
 
@@ -115,6 +121,7 @@ export const useMultiChainAuth = (chain: ChainType) => {
         error.message?.includes('rejected') ||
         error.message?.includes('denied')
       ) {
+        setUserDeclinedSigning(true);
         toast('Please sign the message to connect your wallet');
       } else {
         toast.error(
@@ -126,8 +133,14 @@ export const useMultiChainAuth = (chain: ChainType) => {
     }
   };
 
+  const resetDeclinedState = () => {
+    setUserDeclinedSigning(false);
+  };
+
   return {
     isSigningMessage,
+    userDeclinedSigning,
     handleSignIn,
+    resetDeclinedState,
   };
 };

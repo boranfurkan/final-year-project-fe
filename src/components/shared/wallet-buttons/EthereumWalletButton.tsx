@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { WalletButtonBase } from './WalletButtonBase';
 import { useMultiChainAuth } from '@/hooks/useMultiChainAuth';
-import { useAuth } from '@/providers/AuthProvider';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface EthereumWalletButtonProps {
   className?: string;
@@ -14,7 +14,12 @@ export const EthereumWalletButton: React.FC<EthereumWalletButtonProps> = ({
   className,
 }) => {
   const { isAuthed } = useAuth();
-  const { isSigningMessage, handleSignIn } = useMultiChainAuth('ethereum');
+  const {
+    isSigningMessage,
+    userDeclinedSigning,
+    handleSignIn,
+    resetDeclinedState,
+  } = useMultiChainAuth('ethereum');
 
   return (
     <ConnectButton.Custom>
@@ -35,10 +40,25 @@ export const EthereumWalletButton: React.FC<EthereumWalletButtonProps> = ({
           (!authenticationStatus || authenticationStatus === 'authenticated');
 
         useEffect(() => {
-          if (connected && !isAuthed && !isSigningMessage) {
+          // Only attempt sign-in if:
+          // 1. Connected
+          // 2. Not already authenticated
+          // 3. Not currently in signing process
+          // 4. User hasn't explicitly declined signing
+          if (
+            connected &&
+            !isAuthed &&
+            !isSigningMessage &&
+            !userDeclinedSigning
+          ) {
             handleSignIn();
           }
-        }, [connected, isAuthed, isSigningMessage]);
+        }, [connected, isAuthed, isSigningMessage, userDeclinedSigning]);
+
+        const handleManualConnect = () => {
+          resetDeclinedState(); // Reset declined state when user manually connects
+          openConnectModal();
+        };
 
         return (
           <div
@@ -56,7 +76,7 @@ export const EthereumWalletButton: React.FC<EthereumWalletButtonProps> = ({
               if (!connected) {
                 return (
                   <WalletButtonBase
-                    onClick={openConnectModal}
+                    onClick={handleManualConnect}
                     text={isSigningMessage ? 'Connecting...' : 'Connect Wallet'}
                     className={className}
                     disabled={isSigningMessage}

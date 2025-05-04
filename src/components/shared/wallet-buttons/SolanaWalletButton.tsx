@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { shortenWalletAddress } from '@/lib/utils';
 import { useMultiChainAuth } from '@/hooks/useMultiChainAuth';
-import { useAuth } from '@/providers/AuthProvider';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface SolanaWalletButtonProps {
   className?: string;
@@ -24,13 +24,26 @@ export const SolanaWalletButton: React.FC<SolanaWalletButtonProps> = ({
   const { publicKey, disconnect } = useWallet();
   const { setVisible } = useWalletModal();
   const { isAuthed } = useAuth();
-  const { isSigningMessage, handleSignIn } = useMultiChainAuth('solana');
+  const {
+    isSigningMessage,
+    userDeclinedSigning,
+    handleSignIn,
+    resetDeclinedState,
+  } = useMultiChainAuth('solana');
 
   const connected = !!publicKey;
 
   const handleConnect = useCallback(() => {
+    // Reset declined state when user manually clicks connect
+    resetDeclinedState();
     setVisible(true);
-  }, [setVisible]);
+  }, [setVisible, resetDeclinedState]);
+
+  const handleDisconnect = useCallback(() => {
+    // Reset declined state when disconnecting
+    resetDeclinedState();
+    disconnect();
+  }, [disconnect, resetDeclinedState]);
 
   const displayAddress = useMemo(() => {
     if (!publicKey) return '';
@@ -38,10 +51,21 @@ export const SolanaWalletButton: React.FC<SolanaWalletButtonProps> = ({
   }, [publicKey]);
 
   useEffect(() => {
-    if (connected && !isAuthed && !isSigningMessage) {
+    // Only attempt sign-in if:
+    // 1. Connected
+    // 2. Not already authenticated
+    // 3. Not currently in signing process
+    // 4. User hasn't explicitly declined signing
+    if (connected && !isAuthed && !isSigningMessage && !userDeclinedSigning) {
       handleSignIn();
     }
-  }, [connected, isAuthed, isSigningMessage]);
+  }, [
+    connected,
+    isAuthed,
+    isSigningMessage,
+    userDeclinedSigning,
+    handleSignIn,
+  ]);
 
   if (!connected) {
     return (
@@ -66,7 +90,9 @@ export const SolanaWalletButton: React.FC<SolanaWalletButtonProps> = ({
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={disconnect}>Disconnect</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleDisconnect}>
+          Disconnect
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

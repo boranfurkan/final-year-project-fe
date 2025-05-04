@@ -9,34 +9,70 @@ import React, {
   useMemo,
 } from 'react';
 import { ChainType } from '@/types/chain';
+import { useWallet as useSolanaWallet } from '@solana/wallet-adapter-react';
+import { useWallet as useSuiWallet } from '@suiet/wallet-kit';
+import { useAccount } from 'wagmi';
 
 interface WalletContextType {
   selectedChain: ChainType;
   setSelectedChain: (chain: ChainType) => void;
+  isConnected: boolean;
 }
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
+
+const SELECTED_CHAIN_KEY = 'mintmuse-selected-chain';
 
 export const WalletContextProvider = ({
   children,
 }: {
   children: ReactNode;
 }) => {
-  const [selectedChain, setSelectedChainState] =
-    useState<ChainType>('ethereum');
+  const { connected: solanaConnected } = useSolanaWallet();
+  const { connected: suiConnected } = useSuiWallet();
+  const { isConnected: ethereumConnected } = useAccount();
 
-  const setSelectedChain = useCallback((chain: ChainType) => {
-    setTimeout(() => {
-      setSelectedChainState(chain);
-    }, 0);
-  }, []);
+  const [selectedChain, setSelectedChainState] = useState<ChainType>(() => {
+    if (typeof window !== 'undefined') {
+      const savedChain = localStorage.getItem(SELECTED_CHAIN_KEY);
+      return (savedChain as ChainType) || 'ethereum';
+    }
+    return 'ethereum';
+  });
+
+  const isConnected = useMemo(() => {
+    switch (selectedChain) {
+      case 'ethereum':
+        return ethereumConnected;
+      case 'solana':
+        return solanaConnected;
+      case 'sui':
+        return suiConnected;
+      default:
+        return false;
+    }
+  }, [selectedChain, ethereumConnected, solanaConnected, suiConnected]);
+
+  const setSelectedChain = useCallback(
+    (chain: ChainType) => {
+      if (!isConnected) {
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(SELECTED_CHAIN_KEY, chain);
+        }
+
+        setSelectedChainState(chain);
+      }
+    },
+    [isConnected]
+  );
 
   const contextValue = useMemo(
     () => ({
       selectedChain,
       setSelectedChain,
+      isConnected,
     }),
-    [selectedChain, setSelectedChain]
+    [selectedChain, setSelectedChain, isConnected]
   );
 
   return (

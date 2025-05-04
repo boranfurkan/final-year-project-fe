@@ -27,14 +27,14 @@ export default function RootLayout({
       <body
         className={`antialiased dark ${akkuratMonoFont.className} ${neueMontrealFont.variable} ${flabbyBumsFont.variable}`}
       >
-        <Contexts>
-          <Providers>
+        <Providers>
+          <Contexts>
             <div className="w-full h-full">
               <Navbar />
               {children}
             </div>
-          </Providers>
-        </Contexts>
+          </Contexts>
+        </Providers>
       </body>
     </html>
   );
