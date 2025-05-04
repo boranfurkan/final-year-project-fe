@@ -63,7 +63,7 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({ className }) => {
     return (
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <motion.div whileHover={{ scale: 1 }} whileTap={{ scale: 1 }}>
               <Button
                 variant="outline"
@@ -85,7 +85,7 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({ className }) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
           <Button variant="outline" size="sm" className={buttonClassName}>
             {buttonContent}
