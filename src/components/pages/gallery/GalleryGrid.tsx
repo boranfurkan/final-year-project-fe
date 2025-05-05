@@ -127,7 +127,8 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ searchWalletAddress }) => {
         ) : noSearchResults ? (
           <div className="col-span-full text-center py-12">
             <p className="text-white/70 text-lg">
-              No artworks found for wallet address "{searchWalletAddress}".
+              No artworks found for wallet address &quot;{searchWalletAddress}
+              &quot;.
             </p>
           </div>
         ) : filteredArtworks.length === 0 ? (

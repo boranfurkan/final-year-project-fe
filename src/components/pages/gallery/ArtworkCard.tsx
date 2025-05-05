@@ -33,6 +33,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, index }) => {
       document.body.removeChild(a);
       toast.success('Image downloaded successfully');
     } catch (error) {
+      console.error('Error downloading image:', error);
       toast.error('Failed to download image');
     }
   };
