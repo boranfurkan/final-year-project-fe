@@ -32,6 +32,13 @@ export interface GenerateImageResponse {
   imageURL: string;
 }
 
+export interface ImageResponse {
+  /** Public URL of the generated image */
+  imageURL: string;
+  /** Wallet address of the user who generated the image */
+  createdBy: string;
+}
+
 /**
  * User chain
  */
@@ -334,7 +341,7 @@ export const imageControllerGetRandomImages = (
   options?: SecondParameter<typeof getAxiosInstance>,
   signal?: AbortSignal
 ) => {
-  return getAxiosInstance<string[]>(
+  return getAxiosInstance<ImageResponse[]>(
     { url: `/api/image/random-images`, method: 'GET', signal },
     options
   );
@@ -468,6 +475,155 @@ export function useImageControllerGetRandomImages<
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
   const queryOptions = getImageControllerGetRandomImagesQueryOptions(options);
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+}
+
+export const imageControllerGetAllImages = (
+  options?: SecondParameter<typeof getAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return getAxiosInstance<ImageResponse[]>(
+    { url: `/api/image/all-images`, method: 'GET', signal },
+    options
+  );
+};
+
+export const getImageControllerGetAllImagesQueryKey = () => {
+  return [`/api/image/all-images`] as const;
+};
+
+export const getImageControllerGetAllImagesQueryOptions = <
+  TData = Awaited<ReturnType<typeof imageControllerGetAllImages>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof imageControllerGetAllImages>>,
+      TError,
+      TData
+    >
+  >;
+  request?: SecondParameter<typeof getAxiosInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getImageControllerGetAllImagesQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof imageControllerGetAllImages>>
+  > = ({ signal }) => imageControllerGetAllImages(requestOptions, signal);
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof imageControllerGetAllImages>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type ImageControllerGetAllImagesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof imageControllerGetAllImages>>
+>;
+export type ImageControllerGetAllImagesQueryError = unknown;
+
+export function useImageControllerGetAllImages<
+  TData = Awaited<ReturnType<typeof imageControllerGetAllImages>>,
+  TError = unknown
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof imageControllerGetAllImages>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof imageControllerGetAllImages>>,
+          TError,
+          Awaited<ReturnType<typeof imageControllerGetAllImages>>
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof getAxiosInstance>;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useImageControllerGetAllImages<
+  TData = Awaited<ReturnType<typeof imageControllerGetAllImages>>,
+  TError = unknown
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof imageControllerGetAllImages>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof imageControllerGetAllImages>>,
+          TError,
+          Awaited<ReturnType<typeof imageControllerGetAllImages>>
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof getAxiosInstance>;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useImageControllerGetAllImages<
+  TData = Awaited<ReturnType<typeof imageControllerGetAllImages>>,
+  TError = unknown
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof imageControllerGetAllImages>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof getAxiosInstance>;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+
+export function useImageControllerGetAllImages<
+  TData = Awaited<ReturnType<typeof imageControllerGetAllImages>>,
+  TError = unknown
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof imageControllerGetAllImages>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof getAxiosInstance>;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getImageControllerGetAllImagesQueryOptions(options);
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<
     TData,
