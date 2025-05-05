@@ -30,6 +30,8 @@ export interface GenerateImageDto {
 export interface GenerateImageResponse {
   /** Public URL of the generated image */
   imageURL: string;
+  /** Prompt used to generate the image */
+  prompt: string;
 }
 
 export interface ImageResponse {
