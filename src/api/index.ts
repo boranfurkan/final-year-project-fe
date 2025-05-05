@@ -5,7 +5,10 @@
  * API documentation for Furkan Boran final year project
  * OpenAPI spec version: 1.0
  */
-import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQuery
+} from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -18,7 +21,7 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult,
+  UseQueryResult
 } from '@tanstack/react-query';
 
 import { getAxiosInstance } from './AxiosInstance';
@@ -39,13 +42,15 @@ export interface ImageResponse {
   imageURL: string;
   /** Wallet address of the user who generated the image */
   createdBy: string;
+  /** Prompt used to generate the image */
+  prompt: string;
 }
 
 /**
  * User chain
  */
-export type UserResponseChain =
-  (typeof UserResponseChain)[keyof typeof UserResponseChain];
+export type UserResponseChain = typeof UserResponseChain[keyof typeof UserResponseChain];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UserResponseChain = {
@@ -75,8 +80,8 @@ export interface UserImageResponse {
 /**
  * Chain of the user
  */
-export type VerifySignatureRequestDtoChain =
-  (typeof VerifySignatureRequestDtoChain)[keyof typeof VerifySignatureRequestDtoChain];
+export type VerifySignatureRequestDtoChain = typeof VerifySignatureRequestDtoChain[keyof typeof VerifySignatureRequestDtoChain];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const VerifySignatureRequestDtoChain = {
@@ -103,921 +108,532 @@ export interface VerifySignatureResponse {
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
+
+
 export const appControllerGetHello = (
-  options?: SecondParameter<typeof getAxiosInstance>,
-  signal?: AbortSignal
+    
+ options?: SecondParameter<typeof getAxiosInstance>,signal?: AbortSignal
 ) => {
-  return getAxiosInstance<void>(
-    { url: `/api`, method: 'GET', signal },
-    options
-  );
-};
+      
+      
+      return getAxiosInstance<void>(
+      {url: `/api`, method: 'GET', signal
+    },
+      options);
+    }
+  
 
 export const getAppControllerGetHelloQueryKey = () => {
-  return [`/api`] as const;
-};
+    return [`/api`] as const;
+    }
 
-export const getAppControllerGetHelloQueryOptions = <
-  TData = Awaited<ReturnType<typeof appControllerGetHello>>,
-  TError = unknown
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof appControllerGetHello>>,
-      TError,
-      TData
-    >
-  >;
-  request?: SecondParameter<typeof getAxiosInstance>;
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
+    
+export const getAppControllerGetHelloQueryOptions = <TData = Awaited<ReturnType<typeof appControllerGetHello>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof appControllerGetHello>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+) => {
 
-  const queryKey = queryOptions?.queryKey ?? getAppControllerGetHelloQueryKey();
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof appControllerGetHello>>
-  > = ({ signal }) => appControllerGetHello(requestOptions, signal);
+  const queryKey =  queryOptions?.queryKey ?? getAppControllerGetHelloQueryKey();
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof appControllerGetHello>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
+  
 
-export type AppControllerGetHelloQueryResult = NonNullable<
-  Awaited<ReturnType<typeof appControllerGetHello>>
->;
-export type AppControllerGetHelloQueryError = unknown;
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof appControllerGetHello>>> = ({ signal }) => appControllerGetHello(requestOptions, signal);
 
-export function useAppControllerGetHello<
-  TData = Awaited<ReturnType<typeof appControllerGetHello>>,
-  TError = unknown
->(
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof appControllerGetHello>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof appControllerGetHello>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type AppControllerGetHelloQueryResult = NonNullable<Awaited<ReturnType<typeof appControllerGetHello>>>
+export type AppControllerGetHelloQueryError = unknown
+
+
+export function useAppControllerGetHello<TData = Awaited<ReturnType<typeof appControllerGetHello>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof appControllerGetHello>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof appControllerGetHello>>,
           TError,
           Awaited<ReturnType<typeof appControllerGetHello>>
-        >,
-        'initialData'
-      >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useAppControllerGetHello<
-  TData = Awaited<ReturnType<typeof appControllerGetHello>>,
-  TError = unknown
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof appControllerGetHello>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useAppControllerGetHello<TData = Awaited<ReturnType<typeof appControllerGetHello>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof appControllerGetHello>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof appControllerGetHello>>,
           TError,
           Awaited<ReturnType<typeof appControllerGetHello>>
-        >,
-        'initialData'
-      >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useAppControllerGetHello<
-  TData = Awaited<ReturnType<typeof appControllerGetHello>>,
-  TError = unknown
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof appControllerGetHello>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
+        > , 'initialData'
+      >, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useAppControllerGetHello<TData = Awaited<ReturnType<typeof appControllerGetHello>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof appControllerGetHello>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-export function useAppControllerGetHello<
-  TData = Awaited<ReturnType<typeof appControllerGetHello>>,
-  TError = unknown
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof appControllerGetHello>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-} {
-  const queryOptions = getAppControllerGetHelloQueryOptions(options);
+export function useAppControllerGetHello<TData = Awaited<ReturnType<typeof appControllerGetHello>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof appControllerGetHello>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
+  const queryOptions = getAppControllerGetHelloQueryOptions(options)
 
-  query.queryKey = queryOptions.queryKey;
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
 }
+
+
+
 
 export const imageControllerGenerateAndUploadImage = (
-  generateImageDto: GenerateImageDto,
-  options?: SecondParameter<typeof getAxiosInstance>,
-  signal?: AbortSignal
+    generateImageDto: GenerateImageDto,
+ options?: SecondParameter<typeof getAxiosInstance>,signal?: AbortSignal
 ) => {
-  return getAxiosInstance<GenerateImageResponse>(
-    {
-      url: `/api/image/generate`,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      data: generateImageDto,
-      signal,
+      
+      
+      return getAxiosInstance<GenerateImageResponse>(
+      {url: `/api/image/generate`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: generateImageDto, signal
     },
-    options
-  );
-};
+      options);
+    }
+  
 
-export const getImageControllerGenerateAndUploadImageMutationOptions = <
-  TError = unknown,
-  TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof imageControllerGenerateAndUploadImage>>,
-    TError,
-    { data: GenerateImageDto },
-    TContext
-  >;
-  request?: SecondParameter<typeof getAxiosInstance>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof imageControllerGenerateAndUploadImage>>,
-  TError,
-  { data: GenerateImageDto },
-  TContext
-> => {
-  const mutationKey = ['imageControllerGenerateAndUploadImage'];
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof imageControllerGenerateAndUploadImage>>,
-    { data: GenerateImageDto }
-  > = (props) => {
-    const { data } = props ?? {};
+export const getImageControllerGenerateAndUploadImageMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof imageControllerGenerateAndUploadImage>>, TError,{data: GenerateImageDto}, TContext>, request?: SecondParameter<typeof getAxiosInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof imageControllerGenerateAndUploadImage>>, TError,{data: GenerateImageDto}, TContext> => {
 
-    return imageControllerGenerateAndUploadImage(data, requestOptions);
-  };
+const mutationKey = ['imageControllerGenerateAndUploadImage'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-  return { mutationFn, ...mutationOptions };
-};
+      
 
-export type ImageControllerGenerateAndUploadImageMutationResult = NonNullable<
-  Awaited<ReturnType<typeof imageControllerGenerateAndUploadImage>>
->;
-export type ImageControllerGenerateAndUploadImageMutationBody =
-  GenerateImageDto;
-export type ImageControllerGenerateAndUploadImageMutationError = unknown;
 
-export const useImageControllerGenerateAndUploadImage = <
-  TError = unknown,
-  TContext = unknown
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof imageControllerGenerateAndUploadImage>>,
-      TError,
-      { data: GenerateImageDto },
-      TContext
-    >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseMutationResult<
-  Awaited<ReturnType<typeof imageControllerGenerateAndUploadImage>>,
-  TError,
-  { data: GenerateImageDto },
-  TContext
-> => {
-  const mutationOptions =
-    getImageControllerGenerateAndUploadImageMutationOptions(options);
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof imageControllerGenerateAndUploadImage>>, {data: GenerateImageDto}> = (props) => {
+          const {data} = props ?? {};
 
-  return useMutation(mutationOptions, queryClient);
-};
+          return  imageControllerGenerateAndUploadImage(data,requestOptions)
+        }
 
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ImageControllerGenerateAndUploadImageMutationResult = NonNullable<Awaited<ReturnType<typeof imageControllerGenerateAndUploadImage>>>
+    export type ImageControllerGenerateAndUploadImageMutationBody = GenerateImageDto
+    export type ImageControllerGenerateAndUploadImageMutationError = unknown
+
+    export const useImageControllerGenerateAndUploadImage = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof imageControllerGenerateAndUploadImage>>, TError,{data: GenerateImageDto}, TContext>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof imageControllerGenerateAndUploadImage>>,
+        TError,
+        {data: GenerateImageDto},
+        TContext
+      > => {
+
+      const mutationOptions = getImageControllerGenerateAndUploadImageMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    
 export const imageControllerGetRandomImages = (
-  options?: SecondParameter<typeof getAxiosInstance>,
-  signal?: AbortSignal
+    
+ options?: SecondParameter<typeof getAxiosInstance>,signal?: AbortSignal
 ) => {
-  return getAxiosInstance<ImageResponse[]>(
-    { url: `/api/image/random-images`, method: 'GET', signal },
-    options
-  );
-};
+      
+      
+      return getAxiosInstance<ImageResponse[]>(
+      {url: `/api/image/random-images`, method: 'GET', signal
+    },
+      options);
+    }
+  
 
 export const getImageControllerGetRandomImagesQueryKey = () => {
-  return [`/api/image/random-images`] as const;
-};
+    return [`/api/image/random-images`] as const;
+    }
 
-export const getImageControllerGetRandomImagesQueryOptions = <
-  TData = Awaited<ReturnType<typeof imageControllerGetRandomImages>>,
-  TError = unknown
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof imageControllerGetRandomImages>>,
-      TError,
-      TData
-    >
-  >;
-  request?: SecondParameter<typeof getAxiosInstance>;
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
+    
+export const getImageControllerGetRandomImagesQueryOptions = <TData = Awaited<ReturnType<typeof imageControllerGetRandomImages>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof imageControllerGetRandomImages>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+) => {
 
-  const queryKey =
-    queryOptions?.queryKey ?? getImageControllerGetRandomImagesQueryKey();
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof imageControllerGetRandomImages>>
-  > = ({ signal }) => imageControllerGetRandomImages(requestOptions, signal);
+  const queryKey =  queryOptions?.queryKey ?? getImageControllerGetRandomImagesQueryKey();
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof imageControllerGetRandomImages>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
+  
 
-export type ImageControllerGetRandomImagesQueryResult = NonNullable<
-  Awaited<ReturnType<typeof imageControllerGetRandomImages>>
->;
-export type ImageControllerGetRandomImagesQueryError = unknown;
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof imageControllerGetRandomImages>>> = ({ signal }) => imageControllerGetRandomImages(requestOptions, signal);
 
-export function useImageControllerGetRandomImages<
-  TData = Awaited<ReturnType<typeof imageControllerGetRandomImages>>,
-  TError = unknown
->(
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof imageControllerGetRandomImages>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof imageControllerGetRandomImages>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ImageControllerGetRandomImagesQueryResult = NonNullable<Awaited<ReturnType<typeof imageControllerGetRandomImages>>>
+export type ImageControllerGetRandomImagesQueryError = unknown
+
+
+export function useImageControllerGetRandomImages<TData = Awaited<ReturnType<typeof imageControllerGetRandomImages>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof imageControllerGetRandomImages>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof imageControllerGetRandomImages>>,
           TError,
           Awaited<ReturnType<typeof imageControllerGetRandomImages>>
-        >,
-        'initialData'
-      >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useImageControllerGetRandomImages<
-  TData = Awaited<ReturnType<typeof imageControllerGetRandomImages>>,
-  TError = unknown
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof imageControllerGetRandomImages>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useImageControllerGetRandomImages<TData = Awaited<ReturnType<typeof imageControllerGetRandomImages>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof imageControllerGetRandomImages>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof imageControllerGetRandomImages>>,
           TError,
           Awaited<ReturnType<typeof imageControllerGetRandomImages>>
-        >,
-        'initialData'
-      >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useImageControllerGetRandomImages<
-  TData = Awaited<ReturnType<typeof imageControllerGetRandomImages>>,
-  TError = unknown
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof imageControllerGetRandomImages>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
+        > , 'initialData'
+      >, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useImageControllerGetRandomImages<TData = Awaited<ReturnType<typeof imageControllerGetRandomImages>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof imageControllerGetRandomImages>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-export function useImageControllerGetRandomImages<
-  TData = Awaited<ReturnType<typeof imageControllerGetRandomImages>>,
-  TError = unknown
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof imageControllerGetRandomImages>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-} {
-  const queryOptions = getImageControllerGetRandomImagesQueryOptions(options);
+export function useImageControllerGetRandomImages<TData = Awaited<ReturnType<typeof imageControllerGetRandomImages>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof imageControllerGetRandomImages>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
+  const queryOptions = getImageControllerGetRandomImagesQueryOptions(options)
 
-  query.queryKey = queryOptions.queryKey;
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
 }
+
+
+
 
 export const imageControllerGetAllImages = (
-  options?: SecondParameter<typeof getAxiosInstance>,
-  signal?: AbortSignal
+    
+ options?: SecondParameter<typeof getAxiosInstance>,signal?: AbortSignal
 ) => {
-  return getAxiosInstance<ImageResponse[]>(
-    { url: `/api/image/all-images`, method: 'GET', signal },
-    options
-  );
-};
+      
+      
+      return getAxiosInstance<ImageResponse[]>(
+      {url: `/api/image/all-images`, method: 'GET', signal
+    },
+      options);
+    }
+  
 
 export const getImageControllerGetAllImagesQueryKey = () => {
-  return [`/api/image/all-images`] as const;
-};
+    return [`/api/image/all-images`] as const;
+    }
 
-export const getImageControllerGetAllImagesQueryOptions = <
-  TData = Awaited<ReturnType<typeof imageControllerGetAllImages>>,
-  TError = unknown
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof imageControllerGetAllImages>>,
-      TError,
-      TData
-    >
-  >;
-  request?: SecondParameter<typeof getAxiosInstance>;
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
+    
+export const getImageControllerGetAllImagesQueryOptions = <TData = Awaited<ReturnType<typeof imageControllerGetAllImages>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof imageControllerGetAllImages>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+) => {
 
-  const queryKey =
-    queryOptions?.queryKey ?? getImageControllerGetAllImagesQueryKey();
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof imageControllerGetAllImages>>
-  > = ({ signal }) => imageControllerGetAllImages(requestOptions, signal);
+  const queryKey =  queryOptions?.queryKey ?? getImageControllerGetAllImagesQueryKey();
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof imageControllerGetAllImages>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
+  
 
-export type ImageControllerGetAllImagesQueryResult = NonNullable<
-  Awaited<ReturnType<typeof imageControllerGetAllImages>>
->;
-export type ImageControllerGetAllImagesQueryError = unknown;
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof imageControllerGetAllImages>>> = ({ signal }) => imageControllerGetAllImages(requestOptions, signal);
 
-export function useImageControllerGetAllImages<
-  TData = Awaited<ReturnType<typeof imageControllerGetAllImages>>,
-  TError = unknown
->(
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof imageControllerGetAllImages>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof imageControllerGetAllImages>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ImageControllerGetAllImagesQueryResult = NonNullable<Awaited<ReturnType<typeof imageControllerGetAllImages>>>
+export type ImageControllerGetAllImagesQueryError = unknown
+
+
+export function useImageControllerGetAllImages<TData = Awaited<ReturnType<typeof imageControllerGetAllImages>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof imageControllerGetAllImages>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof imageControllerGetAllImages>>,
           TError,
           Awaited<ReturnType<typeof imageControllerGetAllImages>>
-        >,
-        'initialData'
-      >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useImageControllerGetAllImages<
-  TData = Awaited<ReturnType<typeof imageControllerGetAllImages>>,
-  TError = unknown
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof imageControllerGetAllImages>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useImageControllerGetAllImages<TData = Awaited<ReturnType<typeof imageControllerGetAllImages>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof imageControllerGetAllImages>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof imageControllerGetAllImages>>,
           TError,
           Awaited<ReturnType<typeof imageControllerGetAllImages>>
-        >,
-        'initialData'
-      >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useImageControllerGetAllImages<
-  TData = Awaited<ReturnType<typeof imageControllerGetAllImages>>,
-  TError = unknown
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof imageControllerGetAllImages>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
+        > , 'initialData'
+      >, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useImageControllerGetAllImages<TData = Awaited<ReturnType<typeof imageControllerGetAllImages>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof imageControllerGetAllImages>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-export function useImageControllerGetAllImages<
-  TData = Awaited<ReturnType<typeof imageControllerGetAllImages>>,
-  TError = unknown
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof imageControllerGetAllImages>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-} {
-  const queryOptions = getImageControllerGetAllImagesQueryOptions(options);
+export function useImageControllerGetAllImages<TData = Awaited<ReturnType<typeof imageControllerGetAllImages>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof imageControllerGetAllImages>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
+  const queryOptions = getImageControllerGetAllImagesQueryOptions(options)
 
-  query.queryKey = queryOptions.queryKey;
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
 }
+
+
+
 
 export const userControllerGetMe = (
-  options?: SecondParameter<typeof getAxiosInstance>,
-  signal?: AbortSignal
+    
+ options?: SecondParameter<typeof getAxiosInstance>,signal?: AbortSignal
 ) => {
-  return getAxiosInstance<UserResponse>(
-    { url: `/api/user/me`, method: 'GET', signal },
-    options
-  );
-};
+      
+      
+      return getAxiosInstance<UserResponse>(
+      {url: `/api/user/me`, method: 'GET', signal
+    },
+      options);
+    }
+  
 
 export const getUserControllerGetMeQueryKey = () => {
-  return [`/api/user/me`] as const;
-};
+    return [`/api/user/me`] as const;
+    }
 
-export const getUserControllerGetMeQueryOptions = <
-  TData = Awaited<ReturnType<typeof userControllerGetMe>>,
-  TError = unknown
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof userControllerGetMe>>,
-      TError,
-      TData
-    >
-  >;
-  request?: SecondParameter<typeof getAxiosInstance>;
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
+    
+export const getUserControllerGetMeQueryOptions = <TData = Awaited<ReturnType<typeof userControllerGetMe>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userControllerGetMe>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+) => {
 
-  const queryKey = queryOptions?.queryKey ?? getUserControllerGetMeQueryKey();
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof userControllerGetMe>>
-  > = ({ signal }) => userControllerGetMe(requestOptions, signal);
+  const queryKey =  queryOptions?.queryKey ?? getUserControllerGetMeQueryKey();
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof userControllerGetMe>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
+  
 
-export type UserControllerGetMeQueryResult = NonNullable<
-  Awaited<ReturnType<typeof userControllerGetMe>>
->;
-export type UserControllerGetMeQueryError = unknown;
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof userControllerGetMe>>> = ({ signal }) => userControllerGetMe(requestOptions, signal);
 
-export function useUserControllerGetMe<
-  TData = Awaited<ReturnType<typeof userControllerGetMe>>,
-  TError = unknown
->(
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof userControllerGetMe>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof userControllerGetMe>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type UserControllerGetMeQueryResult = NonNullable<Awaited<ReturnType<typeof userControllerGetMe>>>
+export type UserControllerGetMeQueryError = unknown
+
+
+export function useUserControllerGetMe<TData = Awaited<ReturnType<typeof userControllerGetMe>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof userControllerGetMe>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof userControllerGetMe>>,
           TError,
           Awaited<ReturnType<typeof userControllerGetMe>>
-        >,
-        'initialData'
-      >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useUserControllerGetMe<
-  TData = Awaited<ReturnType<typeof userControllerGetMe>>,
-  TError = unknown
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof userControllerGetMe>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useUserControllerGetMe<TData = Awaited<ReturnType<typeof userControllerGetMe>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userControllerGetMe>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof userControllerGetMe>>,
           TError,
           Awaited<ReturnType<typeof userControllerGetMe>>
-        >,
-        'initialData'
-      >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useUserControllerGetMe<
-  TData = Awaited<ReturnType<typeof userControllerGetMe>>,
-  TError = unknown
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof userControllerGetMe>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
+        > , 'initialData'
+      >, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useUserControllerGetMe<TData = Awaited<ReturnType<typeof userControllerGetMe>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userControllerGetMe>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-export function useUserControllerGetMe<
-  TData = Awaited<ReturnType<typeof userControllerGetMe>>,
-  TError = unknown
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof userControllerGetMe>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-} {
-  const queryOptions = getUserControllerGetMeQueryOptions(options);
+export function useUserControllerGetMe<TData = Awaited<ReturnType<typeof userControllerGetMe>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userControllerGetMe>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
+  const queryOptions = getUserControllerGetMeQueryOptions(options)
 
-  query.queryKey = queryOptions.queryKey;
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
 }
+
+
+
 
 export const userControllerGetImages = (
-  options?: SecondParameter<typeof getAxiosInstance>,
-  signal?: AbortSignal
+    
+ options?: SecondParameter<typeof getAxiosInstance>,signal?: AbortSignal
 ) => {
-  return getAxiosInstance<UserImageResponse>(
-    { url: `/api/user/me/images`, method: 'GET', signal },
-    options
-  );
-};
+      
+      
+      return getAxiosInstance<UserImageResponse>(
+      {url: `/api/user/me/images`, method: 'GET', signal
+    },
+      options);
+    }
+  
 
 export const getUserControllerGetImagesQueryKey = () => {
-  return [`/api/user/me/images`] as const;
-};
+    return [`/api/user/me/images`] as const;
+    }
 
-export const getUserControllerGetImagesQueryOptions = <
-  TData = Awaited<ReturnType<typeof userControllerGetImages>>,
-  TError = unknown
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof userControllerGetImages>>,
-      TError,
-      TData
-    >
-  >;
-  request?: SecondParameter<typeof getAxiosInstance>;
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
+    
+export const getUserControllerGetImagesQueryOptions = <TData = Awaited<ReturnType<typeof userControllerGetImages>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userControllerGetImages>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+) => {
 
-  const queryKey =
-    queryOptions?.queryKey ?? getUserControllerGetImagesQueryKey();
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof userControllerGetImages>>
-  > = ({ signal }) => userControllerGetImages(requestOptions, signal);
+  const queryKey =  queryOptions?.queryKey ?? getUserControllerGetImagesQueryKey();
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof userControllerGetImages>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
+  
 
-export type UserControllerGetImagesQueryResult = NonNullable<
-  Awaited<ReturnType<typeof userControllerGetImages>>
->;
-export type UserControllerGetImagesQueryError = unknown;
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof userControllerGetImages>>> = ({ signal }) => userControllerGetImages(requestOptions, signal);
 
-export function useUserControllerGetImages<
-  TData = Awaited<ReturnType<typeof userControllerGetImages>>,
-  TError = unknown
->(
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof userControllerGetImages>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof userControllerGetImages>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type UserControllerGetImagesQueryResult = NonNullable<Awaited<ReturnType<typeof userControllerGetImages>>>
+export type UserControllerGetImagesQueryError = unknown
+
+
+export function useUserControllerGetImages<TData = Awaited<ReturnType<typeof userControllerGetImages>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof userControllerGetImages>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof userControllerGetImages>>,
           TError,
           Awaited<ReturnType<typeof userControllerGetImages>>
-        >,
-        'initialData'
-      >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useUserControllerGetImages<
-  TData = Awaited<ReturnType<typeof userControllerGetImages>>,
-  TError = unknown
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof userControllerGetImages>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useUserControllerGetImages<TData = Awaited<ReturnType<typeof userControllerGetImages>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userControllerGetImages>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof userControllerGetImages>>,
           TError,
           Awaited<ReturnType<typeof userControllerGetImages>>
-        >,
-        'initialData'
-      >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useUserControllerGetImages<
-  TData = Awaited<ReturnType<typeof userControllerGetImages>>,
-  TError = unknown
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof userControllerGetImages>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
+        > , 'initialData'
+      >, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useUserControllerGetImages<TData = Awaited<ReturnType<typeof userControllerGetImages>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userControllerGetImages>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-export function useUserControllerGetImages<
-  TData = Awaited<ReturnType<typeof userControllerGetImages>>,
-  TError = unknown
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof userControllerGetImages>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-} {
-  const queryOptions = getUserControllerGetImagesQueryOptions(options);
+export function useUserControllerGetImages<TData = Awaited<ReturnType<typeof userControllerGetImages>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userControllerGetImages>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
+  const queryOptions = getUserControllerGetImagesQueryOptions(options)
 
-  query.queryKey = queryOptions.queryKey;
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
 }
 
+
+
+
 export const authControllerVerifySignature = (
-  verifySignatureRequestDto: VerifySignatureRequestDto,
-  options?: SecondParameter<typeof getAxiosInstance>,
-  signal?: AbortSignal
+    verifySignatureRequestDto: VerifySignatureRequestDto,
+ options?: SecondParameter<typeof getAxiosInstance>,signal?: AbortSignal
 ) => {
-  return getAxiosInstance<VerifySignatureResponse>(
-    {
-      url: `/api/auth/verify`,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      data: verifySignatureRequestDto,
-      signal,
+      
+      
+      return getAxiosInstance<VerifySignatureResponse>(
+      {url: `/api/auth/verify`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: verifySignatureRequestDto, signal
     },
-    options
-  );
-};
+      options);
+    }
+  
 
-export const getAuthControllerVerifySignatureMutationOptions = <
-  TError = unknown,
-  TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof authControllerVerifySignature>>,
-    TError,
-    { data: VerifySignatureRequestDto },
-    TContext
-  >;
-  request?: SecondParameter<typeof getAxiosInstance>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof authControllerVerifySignature>>,
-  TError,
-  { data: VerifySignatureRequestDto },
-  TContext
-> => {
-  const mutationKey = ['authControllerVerifySignature'];
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof authControllerVerifySignature>>,
-    { data: VerifySignatureRequestDto }
-  > = (props) => {
-    const { data } = props ?? {};
+export const getAuthControllerVerifySignatureMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof authControllerVerifySignature>>, TError,{data: VerifySignatureRequestDto}, TContext>, request?: SecondParameter<typeof getAxiosInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof authControllerVerifySignature>>, TError,{data: VerifySignatureRequestDto}, TContext> => {
 
-    return authControllerVerifySignature(data, requestOptions);
-  };
+const mutationKey = ['authControllerVerifySignature'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-  return { mutationFn, ...mutationOptions };
-};
+      
 
-export type AuthControllerVerifySignatureMutationResult = NonNullable<
-  Awaited<ReturnType<typeof authControllerVerifySignature>>
->;
-export type AuthControllerVerifySignatureMutationBody =
-  VerifySignatureRequestDto;
-export type AuthControllerVerifySignatureMutationError = unknown;
 
-export const useAuthControllerVerifySignature = <
-  TError = unknown,
-  TContext = unknown
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof authControllerVerifySignature>>,
-      TError,
-      { data: VerifySignatureRequestDto },
-      TContext
-    >;
-    request?: SecondParameter<typeof getAxiosInstance>;
-  },
-  queryClient?: QueryClient
-): UseMutationResult<
-  Awaited<ReturnType<typeof authControllerVerifySignature>>,
-  TError,
-  { data: VerifySignatureRequestDto },
-  TContext
-> => {
-  const mutationOptions =
-    getAuthControllerVerifySignatureMutationOptions(options);
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof authControllerVerifySignature>>, {data: VerifySignatureRequestDto}> = (props) => {
+          const {data} = props ?? {};
 
-  return useMutation(mutationOptions, queryClient);
-};
+          return  authControllerVerifySignature(data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type AuthControllerVerifySignatureMutationResult = NonNullable<Awaited<ReturnType<typeof authControllerVerifySignature>>>
+    export type AuthControllerVerifySignatureMutationBody = VerifySignatureRequestDto
+    export type AuthControllerVerifySignatureMutationError = unknown
+
+    export const useAuthControllerVerifySignature = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof authControllerVerifySignature>>, TError,{data: VerifySignatureRequestDto}, TContext>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof authControllerVerifySignature>>,
+        TError,
+        {data: VerifySignatureRequestDto},
+        TContext
+      > => {
+
+      const mutationOptions = getAuthControllerVerifySignatureMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
