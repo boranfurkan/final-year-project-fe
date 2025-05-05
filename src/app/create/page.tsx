@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { Sparkles, Info } from 'lucide-react';
-import { useImageGeneration } from '@/hooks/useImageGeneration';
-import { useWallet } from '@/contexts/WalletContext';
-import ChatMessage from '@/components/pages/create/ChatMessage';
+import Image from 'next/image';
+import React from 'react';
+
 import ChatInput from '@/components/pages/create/ChatInput';
+import ChatMessage from '@/components/pages/create/ChatMessage';
 import GeneratedImage from '@/components/pages/create/GeneratedImage';
 import UnifiedWalletButton from '@/components/shared/wallet-buttons/UnifiedWalletButton';
 import {
@@ -16,6 +15,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { useWallet } from '@/contexts/WalletContext';
+import { useImageGeneration } from '@/hooks/useImageGeneration';
 
 const CreatePage: React.FC = () => {
   const {
@@ -82,8 +83,8 @@ const CreatePage: React.FC = () => {
                   Connect Your Wallet
                 </h3>
                 <p className="text-sm text-white/80">
-                  You can create artwork without connecting, but you'll need a
-                  wallet to mint your creations as NFTs.
+                  You can create artwork without connecting, but you&apos;ll
+                  need a wallet to mint your creations as NFTs.
                 </p>
               </div>
               <UnifiedWalletButton />
@@ -154,8 +155,9 @@ const CreatePage: React.FC = () => {
               <li className="flex items-start gap-2">
                 <span className="text-[#F3CC3E]">•</span>
                 <span>
-                  Mention "swirling patterns," "bold brushstrokes," or "vibrant
-                  colors" for better results
+                  Mention &apos;swirling patterns,&apos; &apos;bold
+                  brushstrokes,&apos; or &apos;vibrant colors&apos; for better
+                  results
                 </span>
               </li>
             </ul>
@@ -169,7 +171,7 @@ const CreatePage: React.FC = () => {
                     MintMuse specializes in creating artwork inspired by
                     post-impressionist techniques with bold brushstrokes,
                     vibrant colors, and emotional expression characteristic of
-                    Vincent van Gogh's revolutionary artistic style.
+                    Vincent van Gogh&apos;s revolutionary artistic style.
                   </p>
                 </TooltipContent>
               </Tooltip>

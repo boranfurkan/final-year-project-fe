@@ -1,5 +1,6 @@
-import { FEATURED_CREATIONS_TYPE } from '@/types/general';
 import { MessageSquare, ImageIcon, Wallet, CheckCircle2 } from 'lucide-react';
+
+import { FEATURED_CREATIONS_TYPE } from '@/types/general';
 
 export const SITE_NAME = 'MintMuse';
 export const SITE_DESCRIPTION =

@@ -1,15 +1,15 @@
 'use client';
-import React, { useState, useRef } from 'react';
 import {
   motion,
   useScroll,
   useTransform,
   AnimatePresence,
 } from 'framer-motion';
-
 import Image from 'next/image';
-import useWindowSize from '@/hooks/useWindowSize';
+import React, { useState, useRef } from 'react';
+
 import { HOW_IT_WORKS_STEPS } from '@/data/general';
+import useWindowSize from '@/hooks/useWindowSize';
 
 const HowItWorksSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,35 +27,108 @@ const HowItWorksSection: React.FC = () => {
     ['0%', '33%', '66%', '100%']
   );
 
-  const stepRefs = HOW_IT_WORKS_STEPS.map(() => useRef(null));
+  // Create refs at the top level
+  const stepRef0 = useRef(null);
+  const stepRef1 = useRef(null);
+  const stepRef2 = useRef(null);
+  const stepRef3 = useRef(null);
+  const stepRefs = [stepRef0, stepRef1, stepRef2, stepRef3];
 
-  const stepTransforms = HOW_IT_WORKS_STEPS.map((_, index) => {
-    const inViewStart = index * 0.25;
-    const inViewEnd = (index + 1) * 0.25;
+  // Create transform values at the top level
+  const scale0 = useTransform(
+    scrollYProgress,
+    [0 * 0.25 - 0.1, 0 * 0.25, (0 + 1) * 0.25, (0 + 1) * 0.25 + 0.1],
+    [0.8, 1, 1, 0.8]
+  );
+  const scale1 = useTransform(
+    scrollYProgress,
+    [1 * 0.25 - 0.1, 1 * 0.25, (1 + 1) * 0.25, (1 + 1) * 0.25 + 0.1],
+    [0.8, 1, 1, 0.8]
+  );
+  const scale2 = useTransform(
+    scrollYProgress,
+    [2 * 0.25 - 0.1, 2 * 0.25, (2 + 1) * 0.25, (2 + 1) * 0.25 + 0.1],
+    [0.8, 1, 1, 0.8]
+  );
+  const scale3 = useTransform(
+    scrollYProgress,
+    [3 * 0.25 - 0.1, 3 * 0.25, (3 + 1) * 0.25, (3 + 1) * 0.25 + 0.1],
+    [0.8, 1, 1, 0.8]
+  );
 
-    return {
-      scale: useTransform(
-        scrollYProgress,
-        [inViewStart - 0.1, inViewStart, inViewEnd, inViewEnd + 0.1],
-        [0.8, 1, 1, 0.8]
-      ),
-      opacity: useTransform(
-        scrollYProgress,
-        [inViewStart - 0.1, inViewStart, inViewEnd, inViewEnd + 0.1],
-        [0.3, 1, 1, 0.3]
-      ),
-      backgroundColor: useTransform(
-        scrollYProgress,
-        [index * 0.25, index * 0.25 + 0.01],
-        ['#000', HOW_IT_WORKS_STEPS[index].color]
-      ),
-      borderColor: useTransform(
-        scrollYProgress,
-        [index * 0.25, index * 0.25 + 0.01],
-        ['rgba(255,255,255,0.3)', HOW_IT_WORKS_STEPS[index].accentColor]
-      ),
-    };
-  });
+  const opacity0 = useTransform(
+    scrollYProgress,
+    [0 * 0.25 - 0.1, 0 * 0.25, (0 + 1) * 0.25, (0 + 1) * 0.25 + 0.1],
+    [0.3, 1, 1, 0.3]
+  );
+  const opacity1 = useTransform(
+    scrollYProgress,
+    [1 * 0.25 - 0.1, 1 * 0.25, (1 + 1) * 0.25, (1 + 1) * 0.25 + 0.1],
+    [0.3, 1, 1, 0.3]
+  );
+  const opacity2 = useTransform(
+    scrollYProgress,
+    [2 * 0.25 - 0.1, 2 * 0.25, (2 + 1) * 0.25, (2 + 1) * 0.25 + 0.1],
+    [0.3, 1, 1, 0.3]
+  );
+  const opacity3 = useTransform(
+    scrollYProgress,
+    [3 * 0.25 - 0.1, 3 * 0.25, (3 + 1) * 0.25, (3 + 1) * 0.25 + 0.1],
+    [0.3, 1, 1, 0.3]
+  );
+
+  const backgroundColor0 = useTransform(
+    scrollYProgress,
+    [0 * 0.25, 0 * 0.25 + 0.01],
+    ['#000', HOW_IT_WORKS_STEPS[0].color]
+  );
+  const backgroundColor1 = useTransform(
+    scrollYProgress,
+    [1 * 0.25, 1 * 0.25 + 0.01],
+    ['#000', HOW_IT_WORKS_STEPS[1].color]
+  );
+  const backgroundColor2 = useTransform(
+    scrollYProgress,
+    [2 * 0.25, 2 * 0.25 + 0.01],
+    ['#000', HOW_IT_WORKS_STEPS[2].color]
+  );
+  const backgroundColor3 = useTransform(
+    scrollYProgress,
+    [3 * 0.25, 3 * 0.25 + 0.01],
+    ['#000', HOW_IT_WORKS_STEPS[3].color]
+  );
+
+  const borderColor0 = useTransform(
+    scrollYProgress,
+    [0 * 0.25, 0 * 0.25 + 0.01],
+    ['rgba(255,255,255,0.3)', HOW_IT_WORKS_STEPS[0].accentColor]
+  );
+  const borderColor1 = useTransform(
+    scrollYProgress,
+    [1 * 0.25, 1 * 0.25 + 0.01],
+    ['rgba(255,255,255,0.3)', HOW_IT_WORKS_STEPS[1].accentColor]
+  );
+  const borderColor2 = useTransform(
+    scrollYProgress,
+    [2 * 0.25, 2 * 0.25 + 0.01],
+    ['rgba(255,255,255,0.3)', HOW_IT_WORKS_STEPS[2].accentColor]
+  );
+  const borderColor3 = useTransform(
+    scrollYProgress,
+    [3 * 0.25, 3 * 0.25 + 0.01],
+    ['rgba(255,255,255,0.3)', HOW_IT_WORKS_STEPS[3].accentColor]
+  );
+
+  // Group the transforms for easier access
+  const scales = [scale0, scale1, scale2, scale3];
+  const opacities = [opacity0, opacity1, opacity2, opacity3];
+  const backgroundColors = [
+    backgroundColor0,
+    backgroundColor1,
+    backgroundColor2,
+    backgroundColor3,
+  ];
+  const borderColors = [borderColor0, borderColor1, borderColor2, borderColor3];
 
   const handleStepSelect = (index: number) => {
     setCurrentStep(index);
@@ -137,8 +210,8 @@ const HowItWorksSection: React.FC = () => {
                     <motion.div
                       className="w-8 h-8 rounded-full border-2 flex items-center justify-center relative z-10"
                       style={{
-                        backgroundColor: stepTransforms[index].backgroundColor,
-                        borderColor: stepTransforms[index].borderColor,
+                        backgroundColor: backgroundColors[index],
+                        borderColor: borderColors[index],
                       }}
                     >
                       <span className="text-white text-sm font-bold">
@@ -165,8 +238,8 @@ const HowItWorksSection: React.FC = () => {
                   ref={stepRefs[index]}
                   key={step.id}
                   style={{
-                    scale: stepTransforms[index].scale,
-                    opacity: stepTransforms[index].opacity,
+                    scale: scales[index],
+                    opacity: opacities[index],
                     order: index % 2 === 0 ? index * 2 : index * 2 + 1,
                   }}
                   className="min-h-[300px] flex flex-col justify-center"
@@ -280,8 +353,8 @@ const HowItWorksSection: React.FC = () => {
                   <motion.div
                     key={`visual-${step.id}`}
                     style={{
-                      scale: stepTransforms[index].scale,
-                      opacity: stepTransforms[index].opacity,
+                      scale: scales[index],
+                      opacity: opacities[index],
                       order: index * 2,
                     }}
                     className="min-h-[300px] flex flex-col justify-center"
@@ -362,8 +435,8 @@ const HowItWorksSection: React.FC = () => {
                   <motion.div
                     key={`content-${step.id}`}
                     style={{
-                      scale: stepTransforms[index].scale,
-                      opacity: stepTransforms[index].opacity,
+                      scale: scales[index],
+                      opacity: opacities[index],
                       order: index * 2 + 1,
                     }}
                     className="min-h-[300px] flex flex-col justify-center"

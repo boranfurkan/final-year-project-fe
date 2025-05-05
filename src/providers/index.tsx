@@ -1,8 +1,11 @@
 'use client';
-import React, { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import WalletProviders from './WalletProviders';
+import React, { useState } from 'react';
+
 import { Toaster } from '@/components/ui/sonner';
+
+import WalletProviders from './WalletProviders';
+
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(

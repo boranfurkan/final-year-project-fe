@@ -1,25 +1,28 @@
 'use client';
 
-import React from 'react';
-import { ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
+import React from 'react';
+
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
-import { ChainIcon } from './ChainIcon';
-import { ChainType } from '@/types/chain';
-import { useWallet } from '@/contexts/WalletContext';
-import { SUPPORTED_CHAINS } from '@/configs/chain';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { SUPPORTED_CHAINS } from '@/configs/chain';
+import { useWallet } from '@/contexts/WalletContext';
+import { ChainType } from '@/types/chain';
+
+import { ChainIcon } from './ChainIcon';
+
 
 interface ChainSelectorProps {
   className?: string;

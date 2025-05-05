@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 import { Coins, Download, Share2, RefreshCw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import React, { useState } from 'react';
 import { toast } from 'sonner';
+
+import { Button } from '@/components/ui/button';
 import { ImageGenerationResult } from '@/hooks/useImageGeneration';
 
 interface GeneratedImageProps {
@@ -34,6 +35,7 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({
       document.body.removeChild(a);
       toast.success('Image downloaded successfully');
     } catch (error) {
+      console.error('Error downloading image:', error);
       toast.error('Failed to download image');
     }
   };
@@ -111,7 +113,7 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({
               Your Creation
             </h3>
             <p className="text-white/80 text-sm mb-4 italic line-clamp-2">
-              "{image.prompt}"
+              &apos;{image.prompt}&apos;
             </p>
 
             <div className="flex flex-wrap gap-2">

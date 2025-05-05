@@ -1,13 +1,14 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
-import { UserResponse, useUserControllerGetMe } from '@/api';
-import { useWallet as useWalletContext } from '@/contexts/WalletContext';
 import { useWallet as useSolanaWallet } from '@solana/wallet-adapter-react';
 import { useWallet as useSuiWallet } from '@suiet/wallet-kit';
-import { getCookie, setCookie, deleteCookie } from '@/lib/browser';
-import { useAccount } from 'wagmi';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { useAccount } from 'wagmi';
+
+import { UserResponse, useUserControllerGetMe } from '@/api';
+import { useWallet as useWalletContext } from '@/contexts/WalletContext';
+import { getCookie, setCookie, deleteCookie } from '@/lib/browser';
 import { ChainType } from '@/types/chain';
 
 const REFETCH_INTERVAL_ME = 60000;
@@ -29,8 +30,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthed, setIsAuthed] = useState(false);
   const [initialized, setInitialized] = useState(false);
 
-  const { connected: solanaConnected, disconnecting: solanaDisconnecting } =
-    useSolanaWallet();
+  const { connected: solanaConnected } = useSolanaWallet();
   const { connected: suiConnected } = useSuiWallet();
   const { isConnected: ethereumConnected } = useAccount();
 

@@ -1,15 +1,17 @@
+import { useWallet as useSolanaWallet } from '@solana/wallet-adapter-react';
+import { useWallet as useSuiWallet } from '@suiet/wallet-kit';
+import bs58 from 'bs58';
 import { useState } from 'react';
+import { toast } from 'sonner';
+import { useSignMessage, useAccount } from 'wagmi';
+
 import {
   useAuthControllerVerifySignature,
   VerifySignatureRequestDtoChain,
 } from '@/api';
 import { useAuth } from '@/contexts/AuthContext';
 import { ChainType } from '@/types/chain';
-import { toast } from 'sonner';
-import bs58 from 'bs58';
-import { useWallet as useSolanaWallet } from '@solana/wallet-adapter-react';
-import { useWallet as useSuiWallet } from '@suiet/wallet-kit';
-import { useSignMessage, useAccount } from 'wagmi';
+
 import { useCreateNonce } from './useCreateNonce';
 
 // Map UI chain type to API chain enum

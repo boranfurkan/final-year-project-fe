@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosHeaders } from 'axios';
 
-import { getCookie, deleteCookie } from '@/lib/browser';
 import { config } from '@/data/app-config';
+import { getCookie, deleteCookie } from '@/lib/browser';
 
 export const axiosInstance = axios.create({
   baseURL: config.BACKEND_API_URL,

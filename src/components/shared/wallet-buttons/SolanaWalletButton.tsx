@@ -1,18 +1,21 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
-import { WalletButtonBase } from './WalletButtonBase';
+import React, { useCallback, useEffect, useMemo } from 'react';
+
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { shortenWalletAddress } from '@/lib/utils';
-import { useMultiChainAuth } from '@/hooks/useMultiChainAuth';
 import { useAuth } from '@/contexts/AuthContext';
+import { useMultiChainAuth } from '@/hooks/useMultiChainAuth';
+import { shortenWalletAddress } from '@/lib/utils';
+
+import { WalletButtonBase } from './WalletButtonBase';
 
 interface SolanaWalletButtonProps {
   className?: string;

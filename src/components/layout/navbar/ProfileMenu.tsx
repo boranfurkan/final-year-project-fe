@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
-import { User } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { User } from 'lucide-react';
+import Link from 'next/link';
+import React from 'react';
+
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,

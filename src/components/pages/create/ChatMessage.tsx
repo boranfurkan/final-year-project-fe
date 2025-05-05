@@ -1,6 +1,7 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Bot, User } from 'lucide-react';
+import React from 'react';
+
 import { Message } from '@/hooks/useImageGeneration';
 import { cn } from '@/lib/utils';
 

@@ -1,5 +1,7 @@
 'use client';
 
+import { useWallet as useSolanaWallet } from '@solana/wallet-adapter-react';
+import { useWallet as useSuiWallet } from '@suiet/wallet-kit';
 import React, {
   createContext,
   useContext,
@@ -8,10 +10,9 @@ import React, {
   useCallback,
   useMemo,
 } from 'react';
-import { ChainType } from '@/types/chain';
-import { useWallet as useSolanaWallet } from '@solana/wallet-adapter-react';
-import { useWallet as useSuiWallet } from '@suiet/wallet-kit';
 import { useAccount } from 'wagmi';
+
+import { ChainType } from '@/types/chain';
 
 interface WalletContextType {
   selectedChain: ChainType;

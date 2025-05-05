@@ -1,6 +1,7 @@
 import React from 'react';
-import WalletContextProvider from './WalletContext';
+
 import { AuthProvider } from './AuthContext';
+import WalletContextProvider from './WalletContext';
 
 const Contexts = ({ children }: { children: React.ReactNode }) => {
   return (

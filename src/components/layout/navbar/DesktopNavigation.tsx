@@ -1,10 +1,13 @@
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
+import React from 'react';
+
+import UnifiedWalletButton from '@/components/shared/wallet-buttons/UnifiedWalletButton';
+
 import NavLink from './NavLink';
 import ProfileMenu from './ProfileMenu';
-import UnifiedWalletButton from '@/components/shared/wallet-buttons/UnifiedWalletButton';
+
 
 interface DesktopNavigationProps {
   activePath: string;

@@ -1,10 +1,11 @@
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Cpu, Sparkles, Coins, Zap, Link, Shield } from 'lucide-react';
-import { FEATURES } from '@/data/general';
 import Image from 'next/image';
+import React from 'react';
+
+import { FEATURES } from '@/data/general';
 
 const iconComponents = {
   Cpu: Cpu,
@@ -96,7 +97,7 @@ const FeaturesSection: React.FC = () => {
           </motion.div>
           <p className="text-xl text-white/90 bg-black/30 backdrop-blur-sm p-4 rounded-lg">
             Transform your ideas into unique digital collectibles with AI
-            fine-tuned on Vincent van Gogh's masterpieces.
+            fine-tuned on Vincent van Gogh&apos;s masterpieces.
           </p>
         </motion.div>
 

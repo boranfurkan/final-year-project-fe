@@ -1,11 +1,8 @@
 'use client';
 
-import React, { ReactNode, useMemo } from 'react';
-import { createConfig, http } from 'wagmi';
-import { mainnet, base, baseSepolia, holesky } from 'wagmi/chains';
+import { createNetworkConfig, SuiClientProvider } from '@mysten/dapp-kit';
+import { getFullnodeUrl } from '@mysten/sui/client';
 import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
-import { WagmiProvider } from 'wagmi';
-
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import {
   ConnectionProvider,
@@ -14,15 +11,19 @@ import {
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 import { clusterApiUrl } from '@solana/web3.js';
 import { WalletProvider as SuiWalletProvider } from '@suiet/wallet-kit';
-import { createNetworkConfig, SuiClientProvider } from '@mysten/dapp-kit';
-import { getFullnodeUrl } from '@mysten/sui/client';
 
 import '@rainbow-me/rainbowkit/styles.css';
 import '@solana/wallet-adapter-react-ui/styles.css';
 import '@suiet/wallet-kit/style.css';
 
-import { IS_TESTNET, SUPPORTED_CHAINS } from '@/configs/chain';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React, { ReactNode, useMemo } from 'react';
+import { WagmiProvider } from 'wagmi';
+import { createConfig, http } from 'wagmi';
+import { mainnet, base, baseSepolia, holesky } from 'wagmi/chains';
+
+import { IS_TESTNET, SUPPORTED_CHAINS } from '@/configs/chain';
 
 // Create configs outside of component to avoid recreation on render
 const createWagmiConfig = () =>

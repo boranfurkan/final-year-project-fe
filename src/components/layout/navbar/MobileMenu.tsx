@@ -1,7 +1,10 @@
 'use client';
 
-import React from 'react';
+import { motion } from 'framer-motion';
 import { Menu } from 'lucide-react';
+import React from 'react';
+
+import UnifiedWalletButton from '@/components/shared/wallet-buttons/UnifiedWalletButton';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -10,10 +13,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
+
 import NavLink from './NavLink';
 import ProfileMenu from './ProfileMenu';
-import UnifiedWalletButton from '@/components/shared/wallet-buttons/UnifiedWalletButton';
-import { motion, AnimatePresence } from 'framer-motion';
 
 interface MobileMenuProps {
   isOpen: boolean;

@@ -1,11 +1,12 @@
 'use client';
 
-import React from 'react';
 import { Coins } from 'lucide-react';
-import { ChainType } from '@/types/chain';
+import React from 'react';
+
 import EtethereumIcon from '@/assets/EthereumIcon';
 import SolanaIcon from '@/assets/SolanaIcon';
 import SuiIcon from '@/assets/SuiIcon';
+import { ChainType } from '@/types/chain';
 
 interface ChainIconProps {
   chainType: ChainType;

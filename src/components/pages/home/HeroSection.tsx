@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Palette } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useState, useEffect } from 'react';
+
 import { Button } from '@/components/ui/button';
 import { SAMPLE_PROMPTS } from '@/data/general';
-import Link from 'next/link';
-import Image from 'next/image';
 
 const HeroSection: React.FC = () => {
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
@@ -63,7 +64,9 @@ const HeroSection: React.FC = () => {
               className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
             >
               Create NFTs in
-              <span className="block text-[#F3CC3E]">Vincent van Gogh's</span>
+              <span className="block text-[#F3CC3E]">
+                Vincent van Gogh&apos;s
+              </span>
               iconic style
             </motion.h1>
 
@@ -73,9 +76,9 @@ const HeroSection: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-lg text-white/90 mb-8 max-w-lg backdrop-blur-sm bg-black/30 p-3 rounded-lg"
             >
-              Our AI transforms your ideas into stunning artwork with Van Gogh's
-              distinctive brushwork and color palette. Mint directly on
-              Ethereum, Solana, or Sui blockchain.
+              Our AI transforms your ideas into stunning artwork with Van
+              Gogh&apos;s distinctive brushwork and color palette. Mint directly
+              on Ethereum, Solana, or Sui blockchain.
             </motion.p>
 
             <motion.div
@@ -120,7 +123,7 @@ const HeroSection: React.FC = () => {
                     transition={{ duration: 0.5 }}
                     className="font-medium text-white"
                   >
-                    "{SAMPLE_PROMPTS[currentPromptIndex].prompt}"
+                    &apos;{SAMPLE_PROMPTS[currentPromptIndex].prompt}&apos;
                   </motion.p>
                 )}
               </AnimatePresence>
@@ -162,7 +165,7 @@ const HeroSection: React.FC = () => {
                     {/* Overlay with prompt */}
                     <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-4 text-sm">
                       <p className="text-white/90 italic line-clamp-2">
-                        "{SAMPLE_PROMPTS[currentPromptIndex].prompt}"
+                        &apos;{SAMPLE_PROMPTS[currentPromptIndex].prompt}&apos;
                       </p>
                     </div>
                   </motion.div>

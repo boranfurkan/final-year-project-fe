@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import { akkuratMonoFont, flabbyBumsFont, neueMontrealFont } from '@/configs';
 
 import Navbar from '@/components/layout/navbar';
+import { akkuratMonoFont, flabbyBumsFont, neueMontrealFont } from '@/configs';
 import Contexts from '@/contexts';
 import Providers from '@/providers';
 

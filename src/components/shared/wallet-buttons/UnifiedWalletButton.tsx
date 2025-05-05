@@ -2,12 +2,15 @@
 
 import React from 'react';
 
+import { useWallet } from '@/contexts/WalletContext';
+import { ChainType } from '@/types/chain';
+
+import ChainSelector from '../ChainSelector';
+
 import { EthereumWalletButton } from './EthereumWalletButton';
 import { SolanaWalletButton } from './SolanaWalletButton';
 import { SuiWalletButton } from './SuiWalletButton';
-import { useWallet } from '@/contexts/WalletContext';
-import { ChainType } from '@/types/chain';
-import ChainSelector from '../ChainSelector';
+
 
 interface WalletButtonProps {
   className?: string;

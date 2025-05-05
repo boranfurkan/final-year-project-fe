@@ -1,6 +1,7 @@
-import React, { useState, KeyboardEvent } from 'react';
 import { motion } from 'framer-motion';
 import { Send, RefreshCw } from 'lucide-react';
+import React, { useState, KeyboardEvent } from 'react';
+
 import { Button } from '@/components/ui/button';
 
 interface ChatInputProps {

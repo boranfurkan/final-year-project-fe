@@ -1,9 +1,10 @@
 'use client';
 
-import React, { ReactNode } from 'react';
-import { Button } from '@/components/ui/button';
-import { Wallet } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Wallet } from 'lucide-react';
+import React, { ReactNode } from 'react';
+
+import { Button } from '@/components/ui/button';
 
 interface WalletButtonBaseProps {
   className?: string;

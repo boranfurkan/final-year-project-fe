@@ -1,24 +1,27 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
 import { useWallet } from '@suiet/wallet-kit';
-import { WalletButtonBase } from './WalletButtonBase';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import React, { useState, useEffect } from 'react';
+
+
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { shortenWalletAddress } from '@/lib/utils';
-import { useMultiChainAuth } from '@/hooks/useMultiChainAuth';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/contexts/AuthContext';
+import { useMultiChainAuth } from '@/hooks/useMultiChainAuth';
+import { shortenWalletAddress } from '@/lib/utils';
+
+import { WalletButtonBase } from './WalletButtonBase';
 
 interface SuiWalletButtonProps {
   className?: string;

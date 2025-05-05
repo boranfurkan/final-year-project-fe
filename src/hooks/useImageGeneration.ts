@@ -1,7 +1,8 @@
-import { useState, useRef } from 'react';
 import axios from 'axios';
-import { useImageControllerGenerateAndUploadImage } from '@/api';
+import { useState, useRef } from 'react';
 import { toast } from 'sonner';
+
+import { useImageControllerGenerateAndUploadImage } from '@/api';
 
 export type MessageRole = 'user' | 'assistant' | 'system';
 
@@ -112,7 +113,7 @@ export const useImageGeneration = () => {
       await new Promise((resolve) => setTimeout(resolve, 100));
 
       // Show the enhanced prompt in the chat
-      const promptMsgId = addAssistantMessage(`"${enhancedPrompt}"`, false);
+      addAssistantMessage(`"${enhancedPrompt}"`, false);
 
       // Add a small delay before adding the next message
       await new Promise((resolve) => setTimeout(resolve, 100));

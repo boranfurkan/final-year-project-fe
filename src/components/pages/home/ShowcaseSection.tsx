@@ -1,13 +1,14 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
-import { FEATURED_CREATIONS } from '@/data/general';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import useEmblaCarousel from 'embla-carousel-react';
+import React, { useCallback, useEffect, useState } from 'react';
+
 import ChainIcon from '@/components/shared/ChainIcon';
+import { Button } from '@/components/ui/button';
+import { FEATURED_CREATIONS } from '@/data/general';
 import { ChainType } from '@/types/chain';
 
 const ShowcaseSection: React.FC = () => {
@@ -106,8 +107,8 @@ const ShowcaseSection: React.FC = () => {
             viewport={{ once: true }}
             className="text-xl bg-black/40 backdrop-blur-sm p-4 rounded-lg"
           >
-            Explore stunning AI-generated artworks created in Vincent van Gogh's
-            iconic style
+            Explore stunning AI-generated artworks created in Vincent van
+            Gogh&apos;s iconic style
           </motion.p>
         </motion.div>
 
@@ -152,7 +153,7 @@ const ShowcaseSection: React.FC = () => {
                         {nft.title}
                       </h3>
                       <p className="text-white/90 text-sm mb-3 line-clamp-2 italic">
-                        "{nft.prompt}"
+                        &apos;{nft.prompt}&apos;
                       </p>
                       <div className="flex justify-between items-center text-xs">
                         <span className="text-white/70">By: {nft.creator}</span>

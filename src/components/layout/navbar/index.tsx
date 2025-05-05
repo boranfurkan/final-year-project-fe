@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
+import React, { useState } from 'react';
+
+import Logo from '@/assets/Logo';
 
 import DesktopNavigation from './DesktopNavigation';
 import MobileMenu from './MobileMenu';
-import Logo from '@/assets/Logo';
 
 const Navbar: React.FC = () => {
   const pathname = usePathname();
