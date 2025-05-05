@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
+import React from 'react';
 
 interface GalleryFiltersProps {
   onSearch?: (walletAddress: string) => void;

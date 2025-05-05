@@ -1,13 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { Palette } from 'lucide-react';
-import GalleryGrid from '@/components/pages/gallery/GalleryGrid';
-import GalleryFilters from '@/components/pages/gallery/GalleryFilters';
-import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 import Link from 'next/link';
+import React, { useState } from 'react';
+
+import GalleryFilters from '@/components/pages/gallery/GalleryFilters';
+import GalleryGrid from '@/components/pages/gallery/GalleryGrid';
+import { Button } from '@/components/ui/button';
+
 
 const GalleryPage: React.FC = () => {
   const [searchWalletAddress, setSearchWalletAddress] = useState('');

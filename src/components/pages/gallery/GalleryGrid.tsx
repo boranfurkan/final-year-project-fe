@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { RefreshCw, MessageSquare } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+
 import { ImageResponse, useImageControllerGetRandomImages } from '@/api';
+import { Button } from '@/components/ui/button';
+
 import ArtworkCard from './ArtworkCard';
 import ArtworkSkeleton from './ArtworkSkeleton';
-import { Button } from '@/components/ui/button';
-import { RefreshCw, MessageSquare } from 'lucide-react';
 
 interface GalleryGridProps {
   searchWalletAddress?: string;

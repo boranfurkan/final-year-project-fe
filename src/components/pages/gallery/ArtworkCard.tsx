@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
-import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Download } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { ImageResponse } from '@/api';
+import Image from 'next/image';
+import React, { useState } from 'react';
 import { toast } from 'sonner';
+
+import { ImageResponse } from '@/api';
+import { Button } from '@/components/ui/button';
 import { shortenWalletAddress } from '@/lib/utils';
 
 interface ArtworkCardProps {
