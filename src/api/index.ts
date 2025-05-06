@@ -106,6 +106,63 @@ export interface VerifySignatureResponse {
   authToken: string;
 }
 
+export interface AttributeDto {
+  /** Trait type */
+  trait_type: string;
+  /** Trait value */
+  value: string;
+}
+
+/**
+ * Blockchain to create metadata for
+ */
+export type CreateNftMetadataDtoChain = typeof CreateNftMetadataDtoChain[keyof typeof CreateNftMetadataDtoChain];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const CreateNftMetadataDtoChain = {
+  ETH: 'ETH',
+  SOL: 'SOL',
+  SUI: 'SUI',
+} as const;
+
+export interface CreateNftMetadataDto {
+  /** Blockchain to create metadata for */
+  chain: CreateNftMetadataDtoChain;
+  /** Name of the NFT */
+  name: string;
+  /** Description of the NFT */
+  description: string;
+  /** URL of the image (IPFS or HTTP) */
+  imageUrl: string;
+  /** Attributes/traits of the NFT */
+  attributes: AttributeDto[];
+  /** External URL for the NFT (optional) */
+  externalUrl?: string;
+}
+
+/**
+ * Blockchain the metadata was created for
+ */
+export type NftMetadataResponseChain = typeof NftMetadataResponseChain[keyof typeof NftMetadataResponseChain];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const NftMetadataResponseChain = {
+  ETH: 'ETH',
+  SOL: 'SOL',
+  SUI: 'SUI',
+} as const;
+
+export interface NftMetadataResponse {
+  /** IPFS URL of the uploaded metadata */
+  metadataUrl: string;
+  /** HTTP gateway URL of the uploaded metadata for easier access */
+  gatewayUrl: string;
+  /** Blockchain the metadata was created for */
+  chain: NftMetadataResponseChain;
+}
+
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
 
@@ -634,6 +691,65 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
       > => {
 
       const mutationOptions = getAuthControllerVerifySignatureMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    
+export const nftControllerCreateNftMetadata = (
+    createNftMetadataDto: CreateNftMetadataDto,
+ options?: SecondParameter<typeof getAxiosInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return getAxiosInstance<NftMetadataResponse>(
+      {url: `/api/nft/metadata`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createNftMetadataDto, signal
+    },
+      options);
+    }
+  
+
+
+export const getNftControllerCreateNftMetadataMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof nftControllerCreateNftMetadata>>, TError,{data: CreateNftMetadataDto}, TContext>, request?: SecondParameter<typeof getAxiosInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof nftControllerCreateNftMetadata>>, TError,{data: CreateNftMetadataDto}, TContext> => {
+
+const mutationKey = ['nftControllerCreateNftMetadata'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof nftControllerCreateNftMetadata>>, {data: CreateNftMetadataDto}> = (props) => {
+          const {data} = props ?? {};
+
+          return  nftControllerCreateNftMetadata(data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type NftControllerCreateNftMetadataMutationResult = NonNullable<Awaited<ReturnType<typeof nftControllerCreateNftMetadata>>>
+    export type NftControllerCreateNftMetadataMutationBody = CreateNftMetadataDto
+    export type NftControllerCreateNftMetadataMutationError = unknown
+
+    export const useNftControllerCreateNftMetadata = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof nftControllerCreateNftMetadata>>, TError,{data: CreateNftMetadataDto}, TContext>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof nftControllerCreateNftMetadata>>,
+        TError,
+        {data: CreateNftMetadataDto},
+        TContext
+      > => {
+
+      const mutationOptions = getNftControllerCreateNftMetadataMutationOptions(options);
 
       return useMutation(mutationOptions , queryClient);
     }
