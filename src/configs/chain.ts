@@ -6,7 +6,7 @@ export const IS_TESTNET = process.env.NEXT_PUBLIC_IS_TESTNET === '1';
 export const SUPPORTED_CHAINS = {
   ethereum: {
     id: IS_TESTNET ? holesky.id : mainnet.id,
-    name: 'Ethereum',
+    name: IS_TESTNET ? 'Holesky (Testnet)' : 'Ethereum',
     isTestnet: IS_TESTNET,
   },
   solana: {

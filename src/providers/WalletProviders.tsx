@@ -16,7 +16,6 @@ import '@rainbow-me/rainbowkit/styles.css';
 import '@solana/wallet-adapter-react-ui/styles.css';
 import '@suiet/wallet-kit/style.css';
 
-
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React, { ReactNode, useMemo } from 'react';
 import { WagmiProvider } from 'wagmi';
@@ -28,11 +27,9 @@ import { IS_TESTNET, SUPPORTED_CHAINS } from '@/configs/chain';
 // Create configs outside of component to avoid recreation on render
 const createWagmiConfig = () =>
   createConfig({
-    chains: IS_TESTNET ? [holesky, baseSepolia] : [mainnet, base],
+    chains: IS_TESTNET ? [holesky] : [mainnet], // Only use holesky in testnet mode, removed baseSepolia
     transports: {
       [mainnet.id]: http(),
-      [base.id]: http(),
-      [baseSepolia.id]: http(),
       [holesky.id]: http(),
     },
   });

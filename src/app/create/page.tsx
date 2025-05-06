@@ -8,6 +8,7 @@ import React from 'react';
 import ChatInput from '@/components/pages/create/ChatInput';
 import ChatMessage from '@/components/pages/create/ChatMessage';
 import GeneratedImage from '@/components/pages/create/GeneratedImage';
+import RunpodStatus from '@/components/pages/create/RunpodStatus';
 import UnifiedWalletButton from '@/components/shared/wallet-buttons/UnifiedWalletButton';
 import {
   Tooltip,
@@ -67,6 +68,9 @@ const CreatePage: React.FC = () => {
             expressive brushstrokes.
           </p>
         </motion.div>
+
+        {/* RunPod Status Component */}
+        <RunpodStatus />
 
         {/* Wallet Connection Reminder (if not connected) */}
         {!isConnected && (

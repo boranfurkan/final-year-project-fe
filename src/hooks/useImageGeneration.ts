@@ -1,8 +1,11 @@
 import axios from 'axios';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { toast } from 'sonner';
 
-import { useImageControllerGenerateAndUploadImage } from '@/api';
+import {
+  useImageControllerGenerateAndUploadImage,
+  useRunpodControllerIsEndpointRunning,
+} from '@/api';
 
 export type MessageRole = 'user' | 'assistant' | 'system';
 
@@ -37,6 +40,14 @@ export const useImageGeneration = () => {
     useState<ImageGenerationResult | null>(null);
 
   const generateImageMutation = useImageControllerGenerateAndUploadImage();
+
+  // Check server status
+  const { data: serverStatus } = useRunpodControllerIsEndpointRunning({
+    query: {
+      refetchInterval: 30000, // Every 30 seconds
+      staleTime: 15000, // Consider data stale after 15 seconds
+    },
+  });
 
   const generateUniqueId = (prefix: string): string => {
     messageIdCounter.current += 1;
@@ -81,6 +92,20 @@ export const useImageGeneration = () => {
   // Handle the full process of enhancing a prompt and generating an image
   const handlePromptSubmission = async (userPrompt: string) => {
     if (!userPrompt.trim()) return;
+
+    // Check if the server is running
+    const isServerRunning = serverStatus?.isRunning;
+
+    if (!isServerRunning) {
+      toast.error(
+        'AI server is offline. Please wake up the server before generating images.'
+      );
+      addAssistantMessage(
+        "I'm sorry, but our AI server appears to be offline. Please use the 'Wake up server' button above before creating artwork.",
+        false
+      );
+      return;
+    }
 
     try {
       // Add user message
@@ -182,5 +207,6 @@ export const useImageGeneration = () => {
     handlePromptSubmission,
     resetGeneratedImage,
     resetConversation,
+    isServerRunning: serverStatus?.isRunning,
   };
 };
