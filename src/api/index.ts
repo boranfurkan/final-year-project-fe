@@ -46,6 +46,68 @@ export interface ImageResponse {
   prompt: string;
 }
 
+export interface WorkersStatus {
+  /** Number of idle workers */
+  idle: number;
+  /** Number of running workers */
+  running: number;
+}
+
+export interface JobsStatus {
+  /** Number of completed jobs */
+  completed: number;
+  /** Number of failed jobs */
+  failed: number;
+  /** Number of jobs in progress */
+  inProgress: number;
+  /** Number of jobs in queue */
+  inQueue: number;
+  /** Number of retried jobs */
+  retried: number;
+}
+
+export interface RunpodHealthResponse {
+  /** Status of workers */
+  workers: WorkersStatus;
+  /** Status of jobs */
+  jobs: JobsStatus;
+}
+
+/**
+ * Worker status information
+ */
+export type RunpodStatusResponseWorkers = { [key: string]: unknown };
+
+/**
+ * Job status information
+ */
+export type RunpodStatusResponseJobs = { [key: string]: unknown };
+
+export interface RunpodStatusResponse {
+  /** Whether the RunPod endpoint is running */
+  isRunning: boolean;
+  /** Worker status information */
+  workers: RunpodStatusResponseWorkers;
+  /** Job status information */
+  jobs?: RunpodStatusResponseJobs;
+  /** Error message if status check failed */
+  error?: string;
+}
+
+/**
+ * Data returned from the RunPod API
+ */
+export type RunpodWakeupResponseData = { [key: string]: unknown };
+
+export interface RunpodWakeupResponse {
+  /** Status of wake-up operation */
+  status: string;
+  /** Message describing the wake-up operation result */
+  message: string;
+  /** Data returned from the RunPod API */
+  data?: RunpodWakeupResponseData;
+}
+
 /**
  * User chain
  */
@@ -472,6 +534,248 @@ export function useImageControllerGetAllImages<TData = Awaited<ReturnType<typeof
 
 
 
+/**
+ * Retrieves detailed health information from the RunPod API about the endpoint
+ * @summary Get RunPod endpoint health details
+ */
+export const runpodControllerGetEndpointHealth = (
+    
+ options?: SecondParameter<typeof getAxiosInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return getAxiosInstance<RunpodHealthResponse>(
+      {url: `/api/runpod/health`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getRunpodControllerGetEndpointHealthQueryKey = () => {
+    return [`/api/runpod/health`] as const;
+    }
+
+    
+export const getRunpodControllerGetEndpointHealthQueryOptions = <TData = Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>, TError = void>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getRunpodControllerGetEndpointHealthQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>> = ({ signal }) => runpodControllerGetEndpointHealth(requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type RunpodControllerGetEndpointHealthQueryResult = NonNullable<Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>>
+export type RunpodControllerGetEndpointHealthQueryError = void
+
+
+export function useRunpodControllerGetEndpointHealth<TData = Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>, TError = void>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>,
+          TError,
+          Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useRunpodControllerGetEndpointHealth<TData = Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>, TError = void>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>,
+          TError,
+          Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useRunpodControllerGetEndpointHealth<TData = Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>, TError = void>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get RunPod endpoint health details
+ */
+
+export function useRunpodControllerGetEndpointHealth<TData = Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>, TError = void>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof runpodControllerGetEndpointHealth>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getRunpodControllerGetEndpointHealthQueryOptions(options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * Returns a simplified status indicating if the endpoint has running workers
+ * @summary Check if RunPod endpoint is running
+ */
+export const runpodControllerIsEndpointRunning = (
+    
+ options?: SecondParameter<typeof getAxiosInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return getAxiosInstance<RunpodStatusResponse>(
+      {url: `/api/runpod/status`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getRunpodControllerIsEndpointRunningQueryKey = () => {
+    return [`/api/runpod/status`] as const;
+    }
+
+    
+export const getRunpodControllerIsEndpointRunningQueryOptions = <TData = Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>, TError = void>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getRunpodControllerIsEndpointRunningQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>> = ({ signal }) => runpodControllerIsEndpointRunning(requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type RunpodControllerIsEndpointRunningQueryResult = NonNullable<Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>>
+export type RunpodControllerIsEndpointRunningQueryError = void
+
+
+export function useRunpodControllerIsEndpointRunning<TData = Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>, TError = void>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>,
+          TError,
+          Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useRunpodControllerIsEndpointRunning<TData = Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>, TError = void>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>,
+          TError,
+          Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useRunpodControllerIsEndpointRunning<TData = Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>, TError = void>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Check if RunPod endpoint is running
+ */
+
+export function useRunpodControllerIsEndpointRunning<TData = Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>, TError = void>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof runpodControllerIsEndpointRunning>>, TError, TData>>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getRunpodControllerIsEndpointRunningQueryOptions(options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * Sends a wake-up signal to the RunPod endpoint to start processing
+ * @summary Wake up the RunPod endpoint
+ */
+export const runpodControllerWakeUpEndpoint = (
+    
+ options?: SecondParameter<typeof getAxiosInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return getAxiosInstance<RunpodWakeupResponse>(
+      {url: `/api/runpod/wakeup`, method: 'POST', signal
+    },
+      options);
+    }
+  
+
+
+export const getRunpodControllerWakeUpEndpointMutationOptions = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof runpodControllerWakeUpEndpoint>>, TError,void, TContext>, request?: SecondParameter<typeof getAxiosInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof runpodControllerWakeUpEndpoint>>, TError,void, TContext> => {
+
+const mutationKey = ['runpodControllerWakeUpEndpoint'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof runpodControllerWakeUpEndpoint>>, void> = () => {
+          
+
+          return  runpodControllerWakeUpEndpoint(requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RunpodControllerWakeUpEndpointMutationResult = NonNullable<Awaited<ReturnType<typeof runpodControllerWakeUpEndpoint>>>
+    
+    export type RunpodControllerWakeUpEndpointMutationError = void
+
+    /**
+ * @summary Wake up the RunPod endpoint
+ */
+export const useRunpodControllerWakeUpEndpoint = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof runpodControllerWakeUpEndpoint>>, TError,void, TContext>, request?: SecondParameter<typeof getAxiosInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof runpodControllerWakeUpEndpoint>>,
+        TError,
+        void,
+        TContext
+      > => {
+
+      const mutationOptions = getRunpodControllerWakeUpEndpointMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    
 export const userControllerGetMe = (
     
  options?: SecondParameter<typeof getAxiosInstance>,signal?: AbortSignal
