@@ -3,7 +3,6 @@
 import { useWallet } from '@suiet/wallet-kit';
 import React, { useState, useEffect } from 'react';
 
-
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -39,7 +38,7 @@ export const SuiWalletButton: React.FC<SuiWalletButtonProps> = ({
     detectedWallets,
   } = useWallet();
 
-  const { isAuthed } = useAuth();
+  const { isAuthed, logout } = useAuth();
   const {
     isSigningMessage,
     userDeclinedSigning,
@@ -55,7 +54,7 @@ export const SuiWalletButton: React.FC<SuiWalletButtonProps> = ({
     : '';
 
   const handleConnect = () => {
-    resetDeclinedState(); // Reset declined state when user manually connects
+    resetDeclinedState();
     setIsDialogOpen(true);
   };
 
@@ -65,16 +64,12 @@ export const SuiWalletButton: React.FC<SuiWalletButtonProps> = ({
   };
 
   const handleDisconnect = () => {
-    resetDeclinedState(); // Reset declined state when disconnecting
+    resetDeclinedState();
     disconnect();
+    logout();
   };
 
   useEffect(() => {
-    // Only attempt sign-in if:
-    // 1. Connected
-    // 2. Not already authenticated
-    // 3. Not currently in signing process
-    // 4. User hasn't explicitly declined signing
     if (connected && !isAuthed && !isSigningMessage && !userDeclinedSigning) {
       handleSignIn();
     }

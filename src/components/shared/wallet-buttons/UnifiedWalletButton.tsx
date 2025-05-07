@@ -11,7 +11,6 @@ import { EthereumWalletButton } from './EthereumWalletButton';
 import { SolanaWalletButton } from './SolanaWalletButton';
 import { SuiWalletButton } from './SuiWalletButton';
 
-
 interface WalletButtonProps {
   className?: string;
   fullWidth?: boolean;
@@ -23,7 +22,6 @@ export const UnifiedWalletButton: React.FC<WalletButtonProps> = ({
 }) => {
   const { selectedChain } = useWallet();
 
-  // Compute wallet button classes
   const walletButtonClass = fullWidth ? 'w-full' : '';
 
   const renderWalletButton = (chain: ChainType) => {

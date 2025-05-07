@@ -4,7 +4,6 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import React, { useCallback, useEffect, useMemo } from 'react';
 
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,7 +25,7 @@ export const SolanaWalletButton: React.FC<SolanaWalletButtonProps> = ({
 }) => {
   const { publicKey, disconnect } = useWallet();
   const { setVisible } = useWalletModal();
-  const { isAuthed } = useAuth();
+  const { isAuthed, logout } = useAuth();
   const {
     isSigningMessage,
     userDeclinedSigning,
@@ -37,15 +36,14 @@ export const SolanaWalletButton: React.FC<SolanaWalletButtonProps> = ({
   const connected = !!publicKey;
 
   const handleConnect = useCallback(() => {
-    // Reset declined state when user manually clicks connect
     resetDeclinedState();
     setVisible(true);
   }, [setVisible, resetDeclinedState]);
 
   const handleDisconnect = useCallback(() => {
-    // Reset declined state when disconnecting
     resetDeclinedState();
     disconnect();
+    logout();
   }, [disconnect, resetDeclinedState]);
 
   const displayAddress = useMemo(() => {
@@ -54,11 +52,6 @@ export const SolanaWalletButton: React.FC<SolanaWalletButtonProps> = ({
   }, [publicKey]);
 
   useEffect(() => {
-    // Only attempt sign-in if:
-    // 1. Connected
-    // 2. Not already authenticated
-    // 3. Not currently in signing process
-    // 4. User hasn't explicitly declined signing
     if (connected && !isAuthed && !isSigningMessage && !userDeclinedSigning) {
       handleSignIn();
     }

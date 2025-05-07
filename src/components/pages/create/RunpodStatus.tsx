@@ -55,7 +55,6 @@ const RunpodStatus: React.FC = () => {
   } = useRunpodControllerIsEndpointRunning({
     query: {
       refetchInterval: 3000,
-      enabled: !wakeUpMutation.isPending,
     },
   });
 

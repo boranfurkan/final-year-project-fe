@@ -1,14 +1,13 @@
 'use client';
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useAuth } from '@/contexts/AuthContext';
 import { useMultiChainAuth } from '@/hooks/useMultiChainAuth';
 
 import { WalletButtonBase } from './WalletButtonBase';
 
-// Create a separate component for the button content
 const WalletButtonContent: React.FC<{
   connected: boolean;
   isSigningMessage: boolean;
@@ -36,13 +35,7 @@ const WalletButtonContent: React.FC<{
   account,
   className,
 }) => {
-  // Now we can use useEffect at the top level of this component
-  React.useEffect(() => {
-    // Only attempt sign-in if:
-    // 1. Connected
-    // 2. Not already authenticated
-    // 3. Not currently in signing process
-    // 4. User hasn't explicitly declined signing
+  useEffect(() => {
     if (connected && !isAuthed && !isSigningMessage && !userDeclinedSigning) {
       handleSignIn();
     }
@@ -55,7 +48,7 @@ const WalletButtonContent: React.FC<{
   ]);
 
   const handleManualConnect = () => {
-    resetDeclinedState(); // Reset declined state when user manually connects
+    resetDeclinedState();
     openConnectModal();
   };
 

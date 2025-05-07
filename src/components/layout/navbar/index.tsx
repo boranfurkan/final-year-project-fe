@@ -7,19 +7,21 @@ import Logo from '@/assets/icons/Logo';
 
 import DesktopNavigation from './DesktopNavigation';
 import MobileMenu from './MobileMenu';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Navbar: React.FC = () => {
   const pathname = usePathname();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isWalletConnected, setIsWalletConnected] = useState(false);
 
+  const { logout } = useAuth();
+
   const handleConnectWallet = () => {
-    // Implement your wallet connection logic here
     setIsWalletConnected(true);
   };
 
   const handleDisconnectWallet = () => {
-    // Implement your wallet disconnection logic here
+    logout();
     setIsWalletConnected(false);
   };
 
