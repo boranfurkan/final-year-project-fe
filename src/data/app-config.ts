@@ -3,10 +3,10 @@ const ENV_CONFIG = {
     BACKEND_API_URL: 'http://localhost:4444',
   },
   development: {
-    BACKEND_API_URL: 'https://meatbags-api-dev.deadbruv.com',
+    BACKEND_API_URL: 'https://mint-muse.onrender.com/',
   },
   production: {
-    BACKEND_API_URL: 'https://meatbags-api.deadbruv.com',
+    BACKEND_API_URL: 'https://mint-muse.onrender.com/',
   },
 } as const;
 
