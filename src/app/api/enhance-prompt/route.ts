@@ -30,7 +30,7 @@ export async function POST(request: Request) {
           - Strong outlines and simplified forms
           - Emotional intensity and visual dynamism
           
-          Do NOT explicitly mention "Vincent van Gogh" or any specific artist by name in your response.
+          Do NOT explicitly mention "Vincent van Gogh" or any specific artist by name in your response and keep the word count under 45.
           Respond ONLY with the enhanced prompt, nothing else. No explanations or comments.`,
         },
         {
