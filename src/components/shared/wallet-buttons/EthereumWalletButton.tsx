@@ -1,7 +1,7 @@
 'use client';
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useAuth } from '@/contexts/AuthContext';
 import { useMultiChainAuth } from '@/hooks/useMultiChainAuth';
@@ -98,6 +98,18 @@ export const EthereumWalletButton: React.FC<EthereumWalletButtonProps> = ({
     resetDeclinedState,
   } = useMultiChainAuth('ethereum');
 
+  // Track connection state at the component level
+  const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [isReady, setIsReady] = useState<boolean>(false);
+
+  // This effect runs at the component level to detect disconnection
+  useEffect(() => {
+    // Only run the logout logic if we were connected before and now we're not
+    if (isReady && !isConnected && isAuthed) {
+      logout();
+    }
+  }, [isReady, isConnected, isAuthed, logout]);
+
   return (
     <ConnectButton.Custom>
       {({
@@ -116,12 +128,8 @@ export const EthereumWalletButton: React.FC<EthereumWalletButtonProps> = ({
           chain &&
           (!authenticationStatus || authenticationStatus === 'authenticated');
 
-        useEffect(() => {
-          const isNowDisconnected = ready && !connected && isAuthed;
-          if (isNowDisconnected) {
-            logout();
-          }
-        }, [ready, connected, isAuthed]);
+        setIsReady(ready);
+        setIsConnected(connected ? true : false);
 
         return (
           <div
@@ -136,7 +144,7 @@ export const EthereumWalletButton: React.FC<EthereumWalletButtonProps> = ({
             className={className}
           >
             <WalletButtonContent
-              connected={connected ? connected : false}
+              connected={connected ? isConnected : false}
               isSigningMessage={isSigningMessage}
               isAuthed={isAuthed}
               userDeclinedSigning={userDeclinedSigning}

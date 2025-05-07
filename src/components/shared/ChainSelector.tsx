@@ -93,7 +93,7 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({ className }) => {
         align="end"
         className="min-w-[160px] bg-black/80 backdrop-blur-md border border-white/20 text-white"
       >
-        {Object.entries(SUPPORTED_CHAINS).map(([key, chain]) => (
+        {Object.entries(SUPPORTED_CHAINS).map(([key]) => (
           <DropdownMenuItem
             key={key}
             onClick={() => handleSelectChain(key as ChainType)}

@@ -1,5 +1,6 @@
-import ProfileWrapper from '@/components/pages/profile/ProfileWrapper';
 import React from 'react';
+
+import ProfileWrapper from '@/components/pages/profile/ProfileWrapper';
 
 const ProfilePage = () => {
   return (

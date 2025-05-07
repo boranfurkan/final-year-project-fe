@@ -6,13 +6,13 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
 
+import { UserResponseChain } from '@/api';
+import { ImageDetails } from '@/api';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import useCreateMintEth from '@/hooks/ethereum/useCreateMint';
 import { useCreateMint as useCreateMintSol } from '@/hooks/solana/useCreateMint';
-import { UserResponseChain } from '@/api';
 import { getIPFSUrl, seperateIPFSId } from '@/lib/utils';
-import { ImageDetails } from '@/api';
 
 interface ProfileImageCardProps {
   image: ImageDetails;
@@ -171,7 +171,7 @@ const ProfileImageCard: React.FC<ProfileImageCardProps> = ({
       {/* Content */}
       <div className="p-4 flex-grow flex flex-col">
         <p className="text-white/80 text-sm italic line-clamp-2 mb-2">
-          "{image.prompt}"
+          &quot;{image.prompt}&quot;
         </p>
         <p className="text-xs text-white/60 mb-4">Created on {formattedDate}</p>
 

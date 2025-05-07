@@ -44,7 +44,7 @@ const useCreateMint = (): UseCreateMintReturn => {
   const [error, setError] = useState<string | null>(null);
 
   const createMint = useCallback(
-    async (metadataUrl: string, nftName: string): Promise<string> => {
+    async (metadataUrl: string): Promise<string> => {
       setIsLoading(true);
       setError(null);
       setStatus('Initiating mint...');
@@ -118,7 +118,7 @@ const useCreateMint = (): UseCreateMintReturn => {
     const signer = await provider.getSigner();
     const contract = new ethers.Contract(ETH_CONTRACT_ADDRESS, ABI, signer);
     const tokenUri = await contract.tokenURI(tokenId);
-    let metadataUrl = tokenUri;
+    const metadataUrl = tokenUri;
     const response = await fetch(metadataUrl);
     if (!response.ok) {
       throw new Error('Failed to fetch metadata');

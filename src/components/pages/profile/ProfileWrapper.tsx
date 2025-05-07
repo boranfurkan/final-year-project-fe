@@ -6,11 +6,10 @@ import Image from 'next/image';
 import React from 'react';
 
 import { useUserControllerGetImages } from '@/api';
+import ProfileImageCard from '@/components/pages/profile/ProfileImageCard';
+import UnifiedWalletButton from '@/components/shared/wallet-buttons/UnifiedWalletButton';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import UnifiedWalletButton from '@/components/shared/wallet-buttons/UnifiedWalletButton';
-
-import ProfileImageCard from '@/components/pages/profile/ProfileImageCard';
 
 const ProfileWrapper: React.FC = () => {
   const { user, isAuthed } = useAuth();
@@ -134,8 +133,8 @@ const ProfileWrapper: React.FC = () => {
                   No Creations Yet
                 </h3>
                 <p className="text-white/60 max-w-md mx-auto mb-6">
-                  You haven't created any artwork yet. Start creating beautiful
-                  post-impressionist art with our AI.
+                  You haven&apos;t created any artwork yet. Start creating
+                  beautiful post-impressionist art with our AI.
                 </p>
                 <Button
                   className="bg-gradient-to-r from-[#2C75FF] to-[#F3CC3E] hover:opacity-90 text-white"

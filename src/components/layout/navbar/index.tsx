@@ -4,10 +4,10 @@ import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 
 import Logo from '@/assets/icons/Logo';
+import { useAuth } from '@/contexts/AuthContext';
 
 import DesktopNavigation from './DesktopNavigation';
 import MobileMenu from './MobileMenu';
-import { useAuth } from '@/contexts/AuthContext';
 
 const Navbar: React.FC = () => {
   const pathname = usePathname();

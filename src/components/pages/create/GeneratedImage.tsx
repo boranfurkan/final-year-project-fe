@@ -1,7 +1,7 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Coins, Download, Share2, RefreshCw } from 'lucide-react';
 import Image from 'next/image';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { toast } from 'sonner';
 
 import { UserResponseChain } from '@/api';

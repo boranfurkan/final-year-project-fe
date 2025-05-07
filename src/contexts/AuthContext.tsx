@@ -2,6 +2,7 @@
 
 import { useWallet as useSolanaWallet } from '@solana/wallet-adapter-react';
 import { useWallet as useSuiWallet } from '@suiet/wallet-kit';
+import { useRouter } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { useAccount } from 'wagmi';
@@ -10,7 +11,6 @@ import { UserResponse, useUserControllerGetMe } from '@/api';
 import { useWallet as useWalletContext } from '@/contexts/WalletContext';
 import { getCookie, setCookie, deleteCookie } from '@/lib/browser';
 import { ChainType } from '@/types/chain';
-import { useRouter } from 'next/navigation';
 
 const REFETCH_INTERVAL_ME = 60000;
 const AUTH_TOKEN_KEY = 'jwt';
