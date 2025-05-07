@@ -8,3 +8,15 @@ export function cn(...inputs: ClassValue[]) {
 export function shortenWalletAddress(address: string) {
   return `${address.slice(0, 4)}...${address.slice(-4)}`;
 }
+
+export function seperateIPFSId(ipfsUrl: string) {
+  const parts = ipfsUrl.split('ipfs://');
+  if (parts.length > 1) {
+    return parts[1];
+  }
+  return ipfsUrl;
+}
+
+export function getIPFSUrl(ipfsId: string) {
+  return `https://gateway.pinata.cloud/ipfs/${ipfsId}`;
+}
