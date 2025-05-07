@@ -1,19 +1,20 @@
-import { generateSigner } from "@metaplex-foundation/umi";
-import { useUmi } from "./useUmi";
-import { create, ruleSet } from "@metaplex-foundation/mpl-core";
-import { base58 } from "@metaplex-foundation/umi/serializers";
+import { create, ruleSet } from '@metaplex-foundation/mpl-core';
+import { generateSigner } from '@metaplex-foundation/umi';
+import { base58 } from '@metaplex-foundation/umi/serializers';
+
 import {
   CreateNftMetadataDtoChain,
   nftControllerCreateNftMetadata,
-  UserResponseChain,
-} from "@/api";
+} from '@/api';
+
+import { useUmi } from './useUmi';
 
 export const useCreateMint = () => {
   const umi = useUmi();
 
   const createMint = async (metadataUrl: string, nftName: string) => {
     if (!umi) {
-      throw new Error("Umi is not initialized");
+      throw new Error('Umi is not initialized');
     }
 
     const assetSigner = generateSigner(umi);
@@ -24,7 +25,7 @@ export const useCreateMint = () => {
       uri: metadataUrl,
       plugins: [
         {
-          type: "Royalties",
+          type: 'Royalties',
           basisPoints: 500,
           creators: [
             {
@@ -32,7 +33,7 @@ export const useCreateMint = () => {
               percentage: 100,
             },
           ],
-          ruleSet: ruleSet("None"),
+          ruleSet: ruleSet('None'),
         },
       ],
     }).sendAndConfirm(umi);
@@ -50,7 +51,7 @@ export const useCreateMint = () => {
       imageUrl: imageURL,
       name: name,
       description: description,
-      externalUrl: "https://www.mint-muse.com",
+      externalUrl: 'https://www.mint-muse.com',
       attributes: [],
     });
 

@@ -9,7 +9,7 @@ import {
   Zap,
   Clock,
 } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { toast } from 'sonner';
 
 import {
@@ -31,6 +31,7 @@ const RunpodStatus: React.FC = () => {
     try {
       await refetchStatus();
     } catch (error) {
+      console.error('Error fetching server status:', error);
       toast.error('Failed to check AI server status');
     }
   };

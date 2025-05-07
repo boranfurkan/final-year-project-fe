@@ -4,12 +4,12 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
-import { ImageGenerationResult } from '@/hooks/useImageGeneration';
-import { useAuth } from '@/contexts/AuthContext';
 import { UserResponseChain } from '@/api';
-import { useCreateMint as useCreateMintSol } from '@/hooks/solana/useCreateMint';
+import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
 import useCreateMintEth from '@/hooks/ethereum/useCreateMint';
+import { useCreateMint as useCreateMintSol } from '@/hooks/solana/useCreateMint';
+import { ImageGenerationResult } from '@/hooks/useImageGeneration';
 
 interface GeneratedImageProps {
   image: ImageGenerationResult;

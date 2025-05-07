@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
-import Navbar from '@/components/layout/navbar';
 import {
   akkuratMonoFont,
   flabbyBumsFont,
   neueMontrealFont,
 } from '@/assets/fonts';
+import Navbar from '@/components/layout/navbar';
 import Contexts from '@/contexts';
 import Providers from '@/providers';
 

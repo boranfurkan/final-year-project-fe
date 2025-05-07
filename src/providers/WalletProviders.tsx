@@ -20,14 +20,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React, { ReactNode, useMemo } from 'react';
 import { WagmiProvider } from 'wagmi';
 import { createConfig, http } from 'wagmi';
-import { mainnet, base, baseSepolia, holesky } from 'wagmi/chains';
+import { mainnet, holesky } from 'wagmi/chains';
 
 import { IS_TESTNET, SUPPORTED_CHAINS } from '@/configs/chain';
 
-// Create configs outside of component to avoid recreation on render
 const createWagmiConfig = () =>
   createConfig({
-    chains: IS_TESTNET ? [holesky] : [mainnet], // Only use holesky in testnet mode, removed baseSepolia
+    chains: IS_TESTNET ? [holesky] : [mainnet],
     transports: {
       [mainnet.id]: http(),
       [holesky.id]: http(),
