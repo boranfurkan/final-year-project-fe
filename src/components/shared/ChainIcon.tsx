@@ -3,9 +3,9 @@
 import { Coins } from 'lucide-react';
 import React from 'react';
 
-import EtethereumIcon from '@/assets/EthereumIcon';
-import SolanaIcon from '@/assets/SolanaIcon';
-import SuiIcon from '@/assets/SuiIcon';
+import EtethereumIcon from '@/assets/icons/EthereumIcon';
+import SolanaIcon from '@/assets/icons/SolanaIcon';
+import SuiIcon from '@/assets/icons/SuiIcon';
 import { ChainType } from '@/types/chain';
 
 interface ChainIconProps {

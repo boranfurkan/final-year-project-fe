@@ -3,7 +3,7 @@ import localFont from 'next/font/local';
 export const akkuratMonoFont = localFont({
   src: [
     {
-      path: './fonts/akkurat-mono-regular.otf',
+      path: './akkurat-mono-regular.otf',
       weight: '400',
       style: 'normal',
     },
@@ -15,12 +15,12 @@ export const akkuratMonoFont = localFont({
 export const neueMontrealFont = localFont({
   src: [
     {
-      path: './fonts/pp-neue-monteral-medium.woff',
+      path: './pp-neue-monteral-medium.woff',
       weight: '500',
       style: 'normal',
     },
     {
-      path: './fonts/pp-neue-monteral-bold.woff',
+      path: './pp-neue-monteral-bold.woff',
       weight: '700',
       style: 'normal',
     },
@@ -32,7 +32,7 @@ export const neueMontrealFont = localFont({
 export const flabbyBumsFont = localFont({
   src: [
     {
-      path: './fonts/FlabbyBumshandwriting.woff2',
+      path: './FlabbyBumshandwriting.woff2',
       weight: '400',
       style: 'normal',
     },

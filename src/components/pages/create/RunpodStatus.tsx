@@ -26,21 +26,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-const REFETCH_INTERVAL = 5000;
-
 const RunpodStatus: React.FC = () => {
-  const [isPolling, setIsPolling] = useState(true);
-
-  const {
-    data: statusData,
-    isLoading: isStatusLoading,
-    refetch: refetchStatus,
-  } = useRunpodControllerIsEndpointRunning({
-    query: {
-      refetchInterval: isPolling ? REFETCH_INTERVAL : false,
-    },
-  });
-
   const handleManualRefresh = async () => {
     try {
       await refetchStatus();
@@ -61,6 +47,17 @@ const RunpodStatus: React.FC = () => {
     },
   });
 
+  const {
+    data: statusData,
+    isLoading: isStatusLoading,
+    refetch: refetchStatus,
+  } = useRunpodControllerIsEndpointRunning({
+    query: {
+      refetchInterval: 3000,
+      enabled: !wakeUpMutation.isPending,
+    },
+  });
+
   const isRunning = statusData?.isRunning || false;
 
   const isBusy =
@@ -74,12 +71,6 @@ const RunpodStatus: React.FC = () => {
       wakeUpMutation.mutate();
     }
   };
-
-  useEffect(() => {
-    return () => {
-      setIsPolling(false);
-    };
-  }, []);
 
   function getWorkerCount(type: 'running' | 'idle'): number {
     if (!statusData || !statusData.workers) return 0;

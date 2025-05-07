@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 
-import Logo from '@/assets/Logo';
+import Logo from '@/assets/icons/Logo';
 
 import DesktopNavigation from './DesktopNavigation';
 import MobileMenu from './MobileMenu';

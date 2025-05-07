@@ -1,15 +1,15 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { Coins, Download, Share2, RefreshCw } from "lucide-react";
-import Image from "next/image";
-import React, { useState } from "react";
-import { toast } from "sonner";
+import { motion, AnimatePresence } from 'framer-motion';
+import { Coins, Download, Share2, RefreshCw } from 'lucide-react';
+import Image from 'next/image';
+import React, { useState } from 'react';
+import { toast } from 'sonner';
 
-import { Button } from "@/components/ui/button";
-import { ImageGenerationResult } from "@/hooks/useImageGeneration";
-import { useAuth } from "@/contexts/AuthContext";
-import { UserResponseChain } from "@/api";
-import { set } from "@metaplex-foundation/umi/serializers";
-import { useCreateMint } from "@/hooks/solana/useCreateMint";
+import { Button } from '@/components/ui/button';
+import { ImageGenerationResult } from '@/hooks/useImageGeneration';
+import { useAuth } from '@/contexts/AuthContext';
+import { UserResponseChain } from '@/api';
+import { useCreateMint as useCreateMintSol } from '@/hooks/solana/useCreateMint';
+import useCreateMintEth from '@/hooks/ethereum/useCreateMint';
 
 interface GeneratedImageProps {
   image: ImageGenerationResult;
@@ -23,7 +23,11 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({
   isWalletConnected,
 }) => {
   const { user } = useAuth();
-  const { createMint: createSolanaNFT, uploadSolanaMetadata } = useCreateMint();
+  const { createMint: createSolanaNFT, uploadSolanaMetadata } =
+    useCreateMintSol();
+
+  const { createMint: createEthereumNFT, uploadEthereumMetadata } =
+    useCreateMintEth();
 
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [isMinting, setIsMinting] = useState(false);
@@ -33,17 +37,17 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({
       const response = await fetch(image.imageURL);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
+      const a = document.createElement('a');
       a.href = url;
       a.download = `mintmuse-creation-${Date.now()}.png`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
-      toast.success("Image downloaded successfully");
+      toast.success('Image downloaded successfully');
     } catch (error) {
-      console.error("Error downloading image:", error);
-      toast.error("Failed to download image");
+      console.error('Error downloading image:', error);
+      toast.error('Failed to download image');
     }
   };
 
@@ -51,20 +55,20 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({
     if (navigator.share) {
       navigator
         .share({
-          title: "My MintMuse Creation",
-          text: "Check out this artwork I created with MintMuse!",
+          title: 'My MintMuse Creation',
+          text: 'Check out this artwork I created with MintMuse!',
           url: image.imageURL,
         })
-        .then(() => toast.success("Shared successfully"))
+        .then(() => toast.success('Shared successfully'))
         .catch((error) => {
-          console.error("Error sharing:", error);
-          toast.error("Failed to share");
+          console.error('Error sharing:', error);
+          toast.error('Failed to share');
         });
     } else {
       navigator.clipboard
         .writeText(image.imageURL)
-        .then(() => toast.success("Image URL copied to clipboard"))
-        .catch(() => toast.error("Failed to copy image URL"));
+        .then(() => toast.success('Image URL copied to clipboard'))
+        .catch(() => toast.error('Failed to copy image URL'));
     }
   };
 
@@ -72,36 +76,58 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({
     setIsMinting(true);
 
     if (!user) {
-      toast.error("Please connect your wallet to mint this creation");
+      toast.error('Please connect your wallet to mint this creation');
       setIsMinting(false);
       return;
     }
 
     const chain = user.chain;
 
-    switch (chain) {
-      case UserResponseChain.SOL:
-        const metadataUrl = await uploadSolanaMetadata(
-          image.imageURL,
-          image.prompt.slice(0, 32),
-          image.prompt
-        );
-        const mintResult = await createSolanaNFT(metadataUrl, image.prompt.slice(0, 32));
-        toast.success(mintResult);
-        setIsMinting(false);
-        break;
-      case UserResponseChain.SUI:
-        toast.success("Minting on Sui is not yet implemented");
-        setIsMinting(false);
-        break;
-      case UserResponseChain.ETH:
-        toast.success("Minting on Ethereum is not yet implemented");
-        setIsMinting(false);
-        break;
-      default:
-        toast.error("Unsupported blockchain for minting");
-        setIsMinting(false);
-        return;
+    let metadataUrl: string;
+    let mintResult: string;
+
+    try {
+      switch (chain) {
+        case UserResponseChain.SOL:
+          metadataUrl = await uploadSolanaMetadata(
+            image.imageURL,
+            image.prompt.slice(0, 32),
+            image.prompt
+          );
+          mintResult = await createSolanaNFT(
+            metadataUrl,
+            image.prompt.slice(0, 32)
+          );
+          toast.success(mintResult);
+          setIsMinting(false);
+          break;
+        case UserResponseChain.SUI:
+          toast.success('Minting on Sui is not yet implemented');
+          setIsMinting(false);
+          break;
+        case UserResponseChain.ETH:
+          metadataUrl = await uploadEthereumMetadata(
+            image.imageURL,
+            image.prompt.slice(0, 32),
+            image.prompt
+          );
+          mintResult = await createEthereumNFT(
+            metadataUrl,
+            image.prompt.slice(0, 32)
+          );
+          toast.success(mintResult);
+          setIsMinting(false);
+          break;
+        default:
+          toast.error('Unsupported blockchain for minting');
+          setIsMinting(false);
+          return;
+      }
+    } catch (error) {
+      console.error('Error minting NFT:', error);
+      toast.error('Failed to mint NFT');
+      setIsMinting(false);
+      return;
     }
   };
 
@@ -127,7 +153,7 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({
                   transition={{
                     repeat: Infinity,
                     duration: 1.5,
-                    ease: "linear",
+                    ease: 'linear',
                   }}
                 >
                   <RefreshCw size={40} className="text-[#F3CC3E]" />
@@ -179,8 +205,8 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({
                 disabled={isMinting || !isWalletConnected}
                 className={`flex-1 ${
                   isWalletConnected
-                    ? "bg-gradient-to-r from-[#2C75FF] to-[#F3CC3E] hover:opacity-90 text-white"
-                    : "bg-gray-800 text-gray-400 cursor-not-allowed"
+                    ? 'bg-gradient-to-r from-[#2C75FF] to-[#F3CC3E] hover:opacity-90 text-white'
+                    : 'bg-gray-800 text-gray-400 cursor-not-allowed'
                 }`}
               >
                 {isMinting ? (
@@ -189,7 +215,7 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({
                     transition={{
                       repeat: Infinity,
                       duration: 1,
-                      ease: "linear",
+                      ease: 'linear',
                     }}
                     className="mr-2"
                   >
@@ -198,7 +224,7 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({
                 ) : (
                   <Coins size={16} className="mr-2" />
                 )}
-                {isMinting ? "Minting..." : "Mint as NFT"}
+                {isMinting ? 'Minting...' : 'Mint as NFT'}
               </Button>
             </div>
 
