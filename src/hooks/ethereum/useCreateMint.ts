@@ -83,7 +83,7 @@ const useCreateMint = (): UseCreateMintReturn => {
 
         setStatus(`NFT minted successfully! Tx: ${receipt.transactionHash}`);
         setIsLoading(false);
-        return receipt.tokenId.toString();
+        return receipt.hash.toString();
       } catch (err: any) {
         setError(err.message);
         setStatus(`Error: ${err.message}`);
@@ -119,10 +119,6 @@ const useCreateMint = (): UseCreateMintReturn => {
     const contract = new ethers.Contract(ETH_CONTRACT_ADDRESS, ABI, signer);
     const tokenUri = await contract.tokenURI(tokenId);
     let metadataUrl = tokenUri;
-    if (tokenUri.startsWith('ipfs://')) {
-      const ipfsHash = tokenUri.replace('ipfs://', '');
-      metadataUrl = `https://ipfs.io/ipfs/${ipfsHash}`;
-    }
     const response = await fetch(metadataUrl);
     if (!response.ok) {
       throw new Error('Failed to fetch metadata');

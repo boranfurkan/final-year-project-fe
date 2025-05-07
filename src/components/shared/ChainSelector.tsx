@@ -23,7 +23,6 @@ import { ChainType } from '@/types/chain';
 
 import { ChainIcon } from './ChainIcon';
 
-
 interface ChainSelectorProps {
   className?: string;
 }
@@ -52,11 +51,6 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({ className }) => {
           className="mr-2 flex-shrink-0"
         />
         <span className="capitalize truncate">{selectedChain}</span>
-        {SUPPORTED_CHAINS[selectedChain].isTestnet && (
-          <span className="ml-1 text-xs text-white/60 flex-shrink-0">
-            (Test)
-          </span>
-        )}
       </div>
       {!isConnected && <ChevronDown className="h-4 w-4 flex-shrink-0" />}
     </>
@@ -111,9 +105,6 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({ className }) => {
               className="mr-2 flex-shrink-0"
             />
             <span className="capitalize">{key}</span>
-            {chain.isTestnet && (
-              <span className="ml-1 text-xs text-white/60">(Test)</span>
-            )}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

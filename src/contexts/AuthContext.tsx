@@ -10,6 +10,7 @@ import { UserResponse, useUserControllerGetMe } from '@/api';
 import { useWallet as useWalletContext } from '@/contexts/WalletContext';
 import { getCookie, setCookie, deleteCookie } from '@/lib/browser';
 import { ChainType } from '@/types/chain';
+import { useRouter } from 'next/navigation';
 
 const REFETCH_INTERVAL_ME = 60000;
 const AUTH_TOKEN_KEY = 'jwt';
@@ -27,6 +28,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { selectedChain, setSelectedChain } = useWalletContext();
+  const router = useRouter();
   const [isAuthed, setIsAuthed] = useState(false);
   const [initialized, setInitialized] = useState(false);
 
@@ -114,6 +116,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = () => {
     deleteCookie(AUTH_TOKEN_KEY);
     setIsAuthed(false);
+    router.push('/');
   };
 
   return (

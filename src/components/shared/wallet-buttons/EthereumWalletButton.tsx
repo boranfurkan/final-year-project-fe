@@ -90,7 +90,7 @@ interface EthereumWalletButtonProps {
 export const EthereumWalletButton: React.FC<EthereumWalletButtonProps> = ({
   className,
 }) => {
-  const { isAuthed } = useAuth();
+  const { isAuthed, logout } = useAuth();
   const {
     isSigningMessage,
     userDeclinedSigning,
@@ -115,6 +115,13 @@ export const EthereumWalletButton: React.FC<EthereumWalletButtonProps> = ({
           account &&
           chain &&
           (!authenticationStatus || authenticationStatus === 'authenticated');
+
+        useEffect(() => {
+          const isNowDisconnected = ready && !connected && isAuthed;
+          if (isNowDisconnected) {
+            logout();
+          }
+        }, [ready, connected, isAuthed]);
 
         return (
           <div

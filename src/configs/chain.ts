@@ -1,12 +1,12 @@
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { mainnet, holesky } from 'wagmi/chains';
+import { mainnet, sepolia } from 'wagmi/chains';
 
-export const IS_TESTNET = process.env.NEXT_PUBLIC_IS_TESTNET === '1';
+export const IS_TESTNET = true;
 
 export const SUPPORTED_CHAINS = {
   ethereum: {
-    id: IS_TESTNET ? holesky.id : mainnet.id,
-    name: IS_TESTNET ? 'Holesky (Testnet)' : 'Ethereum',
+    id: IS_TESTNET ? sepolia.id : mainnet.id,
+    name: IS_TESTNET ? 'Sepolia' : 'Ethereum',
     isTestnet: IS_TESTNET,
   },
   solana: {

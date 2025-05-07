@@ -1,9 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { User } from 'lucide-react';
+import { User, LogOut } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -12,6 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface ProfileMenuProps {
   isMobile?: boolean;
@@ -22,14 +23,33 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
   isMobile = false,
   onItemClick,
 }) => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { logout, isAuthed } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    if (onItemClick) {
+      onItemClick();
+    }
+  };
+
+  if (!isAuthed) {
+    return null;
+  }
+
   const menuItems = [
     {
       href: '/profile',
       label: 'My Profile',
       icon: <User className="h-4 w-4 mr-2" />,
+      onClick: onItemClick,
     },
-    { href: '/settings', label: 'Settings', icon: null },
-    { href: '/my-collection', label: 'My Collection', icon: null },
+    {
+      href: '#',
+      label: 'Logout',
+      icon: <LogOut className="h-4 w-4 mr-2" />,
+      onClick: handleLogout,
+    },
   ];
 
   if (isMobile) {
@@ -42,14 +62,24 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 * index }}
           >
-            <Link
-              href={item.href}
-              className="flex items-center py-3 text-white/80 hover:text-[#F3CC3E] transition-colors"
-              onClick={onItemClick}
-            >
-              {item.icon}
-              <span className="text-sm font-medium">{item.label}</span>
-            </Link>
+            {item.href === '#' ? (
+              <button
+                className="flex items-center py-3 text-white/80 hover:text-[#F3CC3E] transition-colors w-full text-left"
+                onClick={item.onClick}
+              >
+                {item.icon}
+                <span className="text-sm font-medium">{item.label}</span>
+              </button>
+            ) : (
+              <Link
+                href={item.href}
+                className="flex items-center py-3 text-white/80 hover:text-[#F3CC3E] transition-colors"
+                onClick={item.onClick}
+              >
+                {item.icon}
+                <span className="text-sm font-medium">{item.label}</span>
+              </Link>
+            )}
           </motion.div>
         ))}
       </div>
@@ -57,7 +87,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
@@ -74,14 +104,37 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
       >
         {menuItems.map((item) => (
           <DropdownMenuItem
-            key={item.href}
-            asChild
+            key={item.label}
             className="hover:bg-white/10 hover:text-[#F3CC3E] focus:bg-white/10 focus:text-[#F3CC3E]"
           >
-            <Link href={item.href} className="flex items-center">
-              {item.icon}
-              {item.label}
-            </Link>
+            {item.href === '#' ? (
+              <button
+                className="flex items-center w-full text-left"
+                onClick={() => {
+                  setDropdownOpen(false);
+                  if (item.onClick) {
+                    item.onClick();
+                  }
+                }}
+              >
+                {item.icon}
+                {item.label}
+              </button>
+            ) : (
+              <Link
+                href={item.href}
+                className="flex items-center"
+                onClick={() => {
+                  setDropdownOpen(false);
+                  if (item.onClick) {
+                    item.onClick();
+                  }
+                }}
+              >
+                {item.icon}
+                {item.label}
+              </Link>
+            )}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
